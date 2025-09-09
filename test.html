@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>통합 피드 예시</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; background: #f9f9f9; }
+  .header { background: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
+  .feed { max-width: 800px; margin: 20px auto; }
+  .card { background: #fff; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 15px; }
+  .card-header { display: flex; justify-content: space-between; font-size: 0.9em; color: #777; margin-bottom: 10px; }
+  .card-title { font-weight: bold; margin-bottom: 10px; }
+  .card-content { margin-bottom: 10px; }
+  .card-footer { font-size: 0.8em; color: #555; display: flex; gap: 10px; }
+  .card img, .card video { width: 100%; border-radius: 8px; }
+  .tag { font-size: 0.75em; padding: 2px 6px; border-radius: 4px; background: #eee; color: #333; margin-left: 5px; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>동물 보호소 통합 피드</h1>
+  </div>
+
+  <div class="feed">
+    <!-- 자유게시판 카드 -->
+    <div class="card">
+      <div class="card-header">
+        <span>회원123</span>
+        <span class="tag">자유게시판</span>
+      </div>
+      <div class="card-title">오늘 산책 중 만난 강아지</div>
+      <div class="card-content">짧게 텍스트만 있는 게시물입니다.</div>
+      <div class="card-footer">좋아요 5 · 댓글 2</div>
+    </div>
+
+    <!-- 블로그 카드 -->
+    <div class="card">
+      <div class="card-header">
+        <span>블로그 작성자</span>
+        <span class="tag">블로그</span>
+      </div>
+      <div class="card-title">보호소 일주일 기록</div>
+      <div class="card-content">
+        <img src="https://via.placeholder.com/750x300" alt="블로그 이미지">
+        <p>보호소에서 있었던 다양한 일상을 기록한 긴 글입니다. 텍스트와 이미지를 함께 포함합니다.</p>
+      </div>
+      <div class="card-footer">좋아요 15 · 댓글 4</div>
+    </div>
+
+    <!-- 보호소 일상 카드 -->
+    <div class="card">
+      <div class="card-header">
+        <span>강아지 보호소</span>
+        <span class="tag">보호소 일상</span>
+      </div>
+      <div class="card-title">귀여운 강아지 영상</div>
+      <div class="card-content">
+        <video controls>
+          <source src="sample-video.mp4" type="video/mp4">
+          브라우저가 비디오를 지원하지 않습니다.
+        </video>
+      </div>
+      <div class="card-footer">좋아요 25 · 댓글 10</div>
+    </div>
+  </div>
+</body>
+</html>

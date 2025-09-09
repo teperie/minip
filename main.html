@@ -43,20 +43,18 @@
                 <div class="header-actions">
                     <!-- Search -->
                     <div class="search-container">
-                        <input type="search" placeholder="통합검색..." class="search-input">
+                        <input type="search" placeholder="Search pets, shelters, or articles..." class="search-input">
                         <i data-feather="search" class="search-icon"></i>
                     </div>
 
-                    <!-- Auth Buttons -->
-                    <div class="auth-buttons">
-                        <button class="btn btn-outline">
-                            <i data-feather="log-in"></i>
-                            로그인
-                        </button>
-                        <button class="btn btn-primary">
-                            <i data-feather="user"></i>
-                            회원가입
-                        </button>
+                    <!-- User Info -->
+                    <div class="user-info">
+                        <div class="user-menu">
+                            <button class="user-menu-btn">
+                                <i data-feather="user"></i>
+                                <span>Login</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,13 +63,12 @@
             <nav class="header-nav">
                 <!-- Desktop Navigation -->
                 <div class="nav-desktop">
+                    <a href="#" class="nav-link active">홈</a>
+                    <a href="#" class="nav-link">입양</a>
+                    <a href="#" class="nav-link">후원</a>
+                    <a href="#" class="nav-link">봉사활동</a>
                     <a href="#" class="nav-link">커뮤니티</a>
-                    <a href="#" class="nav-link">최근구조</a>
-                    <a href="#" class="nav-link">실종신고</a>
-                    <a href="#" class="nav-link">입양하기</a>
-                    <a href="#" class="nav-link">후원하기</a>
-                    <a href="#" class="nav-link">봉사하기</a>
-                    <a href="#" class="nav-link">공지사항</a>
+                    <a href="#" class="nav-link">로그인</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -84,13 +81,12 @@
                 <!-- Mobile Menu Overlay -->
                 <div class="mobile-menu-overlay" id="mobile-menu-overlay">
                     <div class="mobile-menu">
+                        <a href="#" class="mobile-nav-link">홈</a>
+                        <a href="#" class="mobile-nav-link">입양</a>
+                        <a href="#" class="mobile-nav-link">후원</a>
+                        <a href="#" class="mobile-nav-link">봉사활동</a>
                         <a href="#" class="mobile-nav-link">커뮤니티</a>
-                        <a href="#" class="mobile-nav-link">최근구조</a>
-                        <a href="#" class="mobile-nav-link">실종신고</a>
-                        <a href="#" class="mobile-nav-link">입양하기</a>
-                        <a href="#" class="mobile-nav-link">후원하기</a>
-                        <a href="#" class="mobile-nav-link">봉사하기</a>
-                        <a href="#" class="mobile-nav-link">공지사항</a>
+                        <a href="#" class="mobile-nav-link">로그인</a>
                     </div>
                 </div>
             </nav>
@@ -101,206 +97,283 @@
     <main id="main-content">
         <!-- Hero Section -->
         <section id="hero" class="hero">
-            <!-- Background Image with Overlay -->
-            <div class="hero-background">
-                <img src="https://images.unsplash.com/photo-1627014450098-8e7ed1084606?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGZhbWlseSUyMHdpdGglMjByZXNjdWUlMjBkb2clMjBhZG9wdGlvbnxlbnwxfHx8fDE3NTY4Nzk3MTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Happy family with rescue dog" class="hero-bg-image">
-                <div class="hero-overlay"></div>
-                <div class="hero-gradient"></div>
+            <!-- Image Carousel -->
+            <div class="hero-carousel">
+                <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&q=80&w=1920&h=800&fit=crop&crop=center')">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&q=80&w=1920&h=800&fit=crop&crop=center')">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&q=80&w=1920&h=800&fit=crop&crop=center')">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&q=80&w=1920&h=800&fit=crop&crop=center')">
+                    <div class="hero-overlay"></div>
+                </div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1520297859535-ccc5b38fb886?ixlib=rb-4.0.3&q=80&w=1920&h=800&fit=crop&crop=center')">
+                    <div class="hero-overlay"></div>
+                </div>
+            </div>
+
+            <!-- Carousel Navigation -->
+            <button class="hero-nav hero-nav-prev">
+                <i data-feather="chevron-left"></i>
+            </button>
+            <button class="hero-nav hero-nav-next">
+                <i data-feather="chevron-right"></i>
+            </button>
+
+            <!-- Carousel Dots -->
+            <div class="hero-dots">
+                <span class="hero-dot active"></span>
+                <span class="hero-dot"></span>
+                <span class="hero-dot"></span>
+                <span class="hero-dot"></span>
+                <span class="hero-dot"></span>
             </div>
 
             <!-- Content -->
             <div class="container hero-content">
                 <div class="hero-text-content">
-                    <!-- Main Slogan -->
-                    <div class="hero-slogan">
-                        <h1 class="hero-title">
-                            지금, <span class="highlight">동반자</span>와 함께 해주세요.
-                        </h1>
-                        <p class="hero-subtitle">
-                            당신의 참여가 더 많은 생명을 구합니다.
-                        </p>
-                    </div>
-
-                    <!-- Browse Button -->
-                    <div class="hero-actions">
-                        <button class="btn btn-large btn-white">
-                            <i data-feather="eye"></i>
-                            내 주변 보호소 찾기
-                            <i data-feather="arrow-right"></i>
+                    <h1 class="hero-title">Give a Pet a Second Chance</h1>
+                    <p class="hero-subtitle">Find your perfect companion and make a difference in an animal's life</p>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="hero-cta">
+                        <button class="cta-btn cta-primary">
+                            <i data-feather="heart"></i>
+                            Adopt
                         </button>
-
-                        <!-- Action Buttons Grid -->
-                        <div class="hero-action-grid">
-                            <button class="action-btn action-btn-primary">
-                                <i data-feather="heart"></i>
-                                <span>최근구조</span>
-                            </button>
-                            
-                            <button class="action-btn action-btn-outline">
-                                <i data-feather="search"></i>
-                                <span>실종신고</span>
-                            </button>
-                            
-                            <button class="action-btn action-btn-outline">
-                                <i data-feather="home"></i>
-                                <span>입양하기</span>
-                            </button>
-                            
-                            <button class="action-btn action-btn-outline">
-                                <i data-feather="dollar-sign"></i>
-                                <span>후원하기</span>
-                            </button>
-                            
-                            <button class="action-btn action-btn-outline">
-                                <i data-feather="users"></i>
-                                <span>봉사하기</span>
-                            </button>
-                        </div>
+                        <button class="cta-btn cta-secondary">
+                            <i data-feather="dollar-sign"></i>
+                            Donate
+                        </button>
+                        <button class="cta-btn cta-tertiary">
+                            <i data-feather="users"></i>
+                            Volunteer
+                        </button>
                     </div>
                 </div>
             </div>
-
-            <!-- Bottom Gradient -->
-            <div class="hero-bottom-gradient"></div>
         </section>
 
         <!-- Recently Rescued Animals -->
-        <section id="rescued-animals" class="animal-carousel-section rescued">
-            <div class="carousel-background-pattern"></div>
-            <div class="container carousel-container">
-                <!-- Header -->
-                <div class="carousel-header">
-                    <div class="carousel-title-group">
-                        <div class="carousel-title-row">
-                            <h2 class="carousel-title">최근 구조된 아이들</h2>
-                            <div class="carousel-stats">
-                                <span class="stat-badge stat-primary">현재 20마리</span>
-                                <span class="stat-badge stat-green">지금까지 1,247마리 구조</span>
-                                <button class="btn btn-outline btn-more">
-                                    <i data-feather="plus"></i>
-                                    더보기
-                                </button>
+        <section id="rescued-animals" class="rescued-animals-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Recently Rescued</h2>
+                    <p class="section-subtitle">Meet our newest arrivals looking for loving homes</p>
+                    <button class="btn btn-outline see-more-btn">See More</button>
+                </div>
+
+                <div class="animals-grid">
+                    <div class="animal-card">
+                        <div class="animal-image">
+                            <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&q=80&w=400&h=300&fit=crop&crop=center" alt="Rescued dog Max">
+                        </div>
+                        <div class="animal-info">
+                            <h3 class="animal-name">Max</h3>
+                            <p class="animal-breed">Golden Retriever Mix</p>
+                            <p class="animal-location">Downtown Shelter</p>
+                            <div class="animal-status">
+                                <span class="status-badge healthy">Healthy</span>
+                                <span class="status-badge vaccinated">Vaccinated</span>
                             </div>
-                        </div>
-                        <p class="carousel-subtitle">길에서 구조되어 보호받고 있는 아이들입니다</p>
-                    </div>
-                </div>
-
-                <!-- Carousel Container -->
-                <div class="carousel-wrapper">
-                    <!-- Navigation Arrows -->
-                    <button class="carousel-nav carousel-nav-prev" id="rescued-prev" disabled>
-                        <i data-feather="chevron-left"></i>
-                    </button>
-                    <button class="carousel-nav carousel-nav-next" id="rescued-next">
-                        <i data-feather="chevron-right"></i>
-                    </button>
-
-                    <!-- Carousel Content -->
-                    <div class="carousel-content">
-                        <div class="carousel-track" id="rescued-track">
-                            <!-- Animal cards will be populated by JavaScript -->
+                            <button class="btn btn-primary animal-cta">View Details</button>
                         </div>
                     </div>
-                </div>
 
-                <!-- Dots Indicator -->
-                <div class="carousel-dots" id="rescued-dots">
-                    <!-- Dots will be populated by JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Adoptable Animals -->
-        <section id="adoptable-animals" class="animal-carousel-section adoptable">
-            <div class="carousel-background-pattern"></div>
-            <div class="container carousel-container">
-                <!-- Header -->
-                <div class="carousel-header">
-                    <div class="carousel-title-group">
-                        <div class="carousel-title-row">
-                            <h2 class="carousel-title">입양을 기다리는 아이들</h2>
-                            <div class="carousel-stats">
-                                <span class="stat-badge stat-primary">현재 20마리</span>
-                                <span class="stat-badge stat-blue">지금까지 3,892마리 입양</span>
-                                <button class="btn btn-outline btn-more">
-                                    <i data-feather="plus"></i>
-                                    더보기
-                                </button>
+                    <div class="animal-card">
+                        <div class="animal-image">
+                            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&q=80&w=400&h=300&fit=crop&crop=center" alt="Rescued cat Luna">
+                        </div>
+                        <div class="animal-info">
+                            <h3 class="animal-name">Luna</h3>
+                            <p class="animal-breed">Domestic Shorthair</p>
+                            <p class="animal-location">Eastside Rescue</p>
+                            <div class="animal-status">
+                                <span class="status-badge healthy">Healthy</span>
+                                <span class="status-badge spayed">Spayed</span>
                             </div>
-                        </div>
-                        <p class="carousel-subtitle">따뜻한 가족을 기다리고 있어요</p>
-                    </div>
-                </div>
-
-                <!-- Carousel Container -->
-                <div class="carousel-wrapper">
-                    <!-- Navigation Arrows -->
-                    <button class="carousel-nav carousel-nav-prev" id="adoptable-prev" disabled>
-                        <i data-feather="chevron-left"></i>
-                    </button>
-                    <button class="carousel-nav carousel-nav-next" id="adoptable-next">
-                        <i data-feather="chevron-right"></i>
-                    </button>
-
-                    <!-- Carousel Content -->
-                    <div class="carousel-content">
-                        <div class="carousel-track" id="adoptable-track">
-                            <!-- Animal cards will be populated by JavaScript -->
+                            <button class="btn btn-primary animal-cta">View Details</button>
                         </div>
                     </div>
-                </div>
 
-                <!-- Dots Indicator -->
-                <div class="carousel-dots" id="adoptable-dots">
-                    <!-- Dots will be populated by JavaScript -->
+                    <div class="animal-card">
+                        <div class="animal-image">
+                            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&q=80&w=400&h=300&fit=crop&crop=center" alt="Rescued dog Buddy">
+                        </div>
+                        <div class="animal-info">
+                            <h3 class="animal-name">Buddy</h3>
+                            <p class="animal-breed">Labrador Mix</p>
+                            <p class="animal-location">City Animal Care</p>
+                            <div class="animal-status">
+                                <span class="status-badge recovering">Recovering</span>
+                                <span class="status-badge neutered">Neutered</span>
+                            </div>
+                            <button class="btn btn-primary animal-cta">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="animal-card">
+                        <div class="animal-image">
+                            <img src="https://images.unsplash.com/photo-1520297859535-ccc5b38fb886?ixlib=rb-4.0.3&q=80&w=400&h=300&fit=crop&crop=center" alt="Rescued cat Milo">
+                        </div>
+                        <div class="animal-info">
+                            <h3 class="animal-name">Milo</h3>
+                            <p class="animal-breed">Orange Tabby</p>
+                            <p class="animal-location">Harbor Shelter</p>
+                            <div class="animal-status">
+                                <span class="status-badge healthy">Healthy</span>
+                                <span class="status-badge vaccinated">Vaccinated</span>
+                            </div>
+                            <button class="btn btn-primary animal-cta">View Details</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Missing Animals -->
-        <section id="missing-animals" class="animal-carousel-section missing">
-            <div class="carousel-background-pattern"></div>
-            <div class="container carousel-container">
-                <!-- Header -->
-                <div class="carousel-header">
-                    <div class="carousel-title-group">
-                        <div class="carousel-title-row">
-                            <h2 class="carousel-title">실종된 아이들</h2>
-                            <div class="carousel-stats">
-                                <span class="stat-badge stat-primary">현재 20마리</span>
-                                <span class="stat-badge stat-orange">지금까지 567마리 찾음</span>
-                                <button class="btn btn-outline btn-more">
-                                    <i data-feather="plus"></i>
-                                    더보기
-                                </button>
+        <section id="missing-animals" class="missing-animals-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Missing Animals</h2>
+                    <p class="section-subtitle">Help us reunite these pets with their families</p>
+                    <div class="missing-actions">
+                        <button class="btn btn-outline see-more-btn">See More</button>
+                        <button class="btn btn-secondary report-btn">Report Missing Animal</button>
+                    </div>
+                </div>
+
+                <div class="missing-list">
+                    <div class="missing-card">
+                        <div class="missing-image">
+                            <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&q=80&w=120&h=120&fit=crop&crop=center" alt="Missing dog Charlie">
+                        </div>
+                        <div class="missing-info">
+                            <h3 class="missing-name">Charlie</h3>
+                            <p class="missing-breed">German Shepherd</p>
+                            <p class="missing-location">Last seen: Central Park area</p>
+                            <p class="missing-date">Missing since: March 10, 2024</p>
+                            <button class="btn btn-primary missing-cta">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="missing-card">
+                        <div class="missing-image">
+                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&q=80&w=120&h=120&fit=crop&crop=center" alt="Missing cat Whiskers">
+                        </div>
+                        <div class="missing-info">
+                            <h3 class="missing-name">Whiskers</h3>
+                            <p class="missing-breed">Siamese Cat</p>
+                            <p class="missing-location">Last seen: Oak Street</p>
+                            <p class="missing-date">Missing since: March 12, 2024</p>
+                            <button class="btn btn-primary missing-cta">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="missing-card">
+                        <div class="missing-image">
+                            <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?ixlib=rb-4.0.3&q=80&w=120&h=120&fit=crop&crop=center" alt="Missing dog Bella">
+                        </div>
+                        <div class="missing-info">
+                            <h3 class="missing-name">Bella</h3>
+                            <p class="missing-breed">Mixed Breed</p>
+                            <p class="missing-location">Last seen: Riverside Drive</p>
+                            <p class="missing-date">Missing since: March 8, 2024</p>
+                            <button class="btn btn-primary missing-cta">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shelter Daily Content -->
+        <section id="shelter-content" class="shelter-content-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Shelter Daily</h2>
+                    <p class="section-subtitle">Behind the scenes at our partner shelters</p>
+                    <button class="btn btn-outline see-more-btn">See More</button>
+                </div>
+
+                <div class="shelter-gallery">
+                    <div class="shelter-item">
+                        <div class="shelter-image">
+                            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&q=80&w=500&h=300&fit=crop&crop=center" alt="Happy Hearts Shelter">
+                        </div>
+                        <div class="shelter-content">
+                            <h3 class="shelter-name">Happy Hearts Shelter</h3>
+                            <p class="shelter-date">March 15, 2024</p>
+                            <p class="shelter-description">Morning playtime with our newest arrivals. The joy on their faces makes all our hard work worthwhile!</p>
+                        </div>
+                    </div>
+
+                    <div class="shelter-item">
+                        <div class="shelter-image">
+                            <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&q=80&w=500&h=300&fit=crop&crop=center" alt="City Animal Rescue">
+                        </div>
+                        <div class="shelter-content">
+                            <h3 class="shelter-name">City Animal Rescue</h3>
+                            <p class="shelter-date">March 14, 2024</p>
+                            <p class="shelter-description">Vaccination day! Our amazing volunteers helped ensure all our furry friends stay healthy and ready for adoption.</p>
+                        </div>
+                    </div>
+
+                    <div class="shelter-item">
+                        <div class="shelter-image">
+                            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&q=80&w=500&h=300&fit=crop&crop=center" alt="Paws & Love Sanctuary">
+                        </div>
+                        <div class="shelter-content">
+                            <h3 class="shelter-name">Paws & Love Sanctuary</h3>
+                            <p class="shelter-date">March 13, 2024</p>
+                            <p class="shelter-description">Training session with our behavioral specialist. Every dog deserves the best chance at finding their forever home.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Member Community Board Section -->
+        <section id="member-board" class="member-board-section">
+            <div class="container">
+                <div class="board-wrapper">
+                    <!-- Header -->
+                    <div class="board-header">
+                        <h3 class="board-title">회원 자유게시판</h3>
+                        <p class="board-subtitle">인기 글</p>
+                        <button class="btn btn-sm btn-outline board-more-btn">
+                            <i data-feather="arrow-right"></i>
+                            더보기
+                        </button>
+                    </div>
+
+                    <!-- Popular Posts -->
+                    <div class="board-posts">
+                        <article class="board-post">
+                            <h4 class="post-title">새로 입양한 아이 사진 자랑</h4>
+                            <div class="post-meta">
+                                <span class="post-author">김민수</span>
+                                <span class="post-stats">
+                                    <i data-feather="message-circle"></i>
+                                    23
+                                </span>
                             </div>
-                        </div>
-                        <p class="carousel-subtitle">가족을 찾고 있어요. 목격하신 분은 제보해주세요</p>
+                        </article>
+
+                        <article class="board-post">
+                            <h4 class="post-title">강아지 훈련 질문있어요</h4>
+                            <div class="post-meta">
+                                <span class="post-author">이재영</span>
+                                <span class="post-stats">
+                                    <i data-feather="message-circle"></i>
+                                    15
+                                </span>
+                            </div>
+                        </article>
                     </div>
-                </div>
-
-                <!-- Carousel Container -->
-                <div class="carousel-wrapper">
-                    <!-- Navigation Arrows -->
-                    <button class="carousel-nav carousel-nav-prev" id="missing-prev" disabled>
-                        <i data-feather="chevron-left"></i>
-                    </button>
-                    <button class="carousel-nav carousel-nav-next" id="missing-next">
-                        <i data-feather="chevron-right"></i>
-                    </button>
-
-                    <!-- Carousel Content -->
-                    <div class="carousel-content">
-                        <div class="carousel-track" id="missing-track">
-                            <!-- Animal cards will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dots Indicator -->
-                <div class="carousel-dots" id="missing-dots">
-                    <!-- Dots will be populated by JavaScript -->
                 </div>
             </div>
         </section>
