@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해피동물보호소 - 프로필</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        
+        body {
+            background-color: #F9F9F9;
+            color: #000000;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #3C2A21;
+            font-weight: 600;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #8D7B68;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            color: #A4907C;
+        }
+        
+        .profile-card {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .shelter-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+        
+        .shelter-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #F1DEC9;
+        }
+        
+        .shelter-info {
+            flex: 1;
+        }
+        
+        .shelter-name {
+            font-size: 32px;
+            color: #3C2A21;
+            margin-bottom: 12px;
+        }
+        
+        .shelter-details {
+            color: #666666;
+            line-height: 1.6;
+        }
+        
+        .detail-item {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        
+        .detail-label {
+            width: 100px;
+            color: #777777;
+        }
+        
+        .detail-value {
+            flex: 1;
+            color: #000000;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-contact {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+        
+        .btn-contact:hover {
+            background-color: #A4907C;
+        }
+        
+        .btn-support {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+        
+        .btn-support:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            color: #3C2A21;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #F1DEC9;
+        }
+        
+        .description {
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .animals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+        
+        .animal-card {
+            background-color: #FFF8EA;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        
+        .animal-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .animal-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #F1DEC9;
+        }
+        
+        .animal-info {
+            padding: 16px;
+        }
+        
+        .animal-name {
+            font-size: 18px;
+            color: #3C2A21;
+            margin-bottom: 8px;
+        }
+        
+        .animal-details {
+            color: #666666;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .animal-link {
+            display: inline-block;
+            color: #8D7B68;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .animal-link:hover {
+            color: #A4907C;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+        
+        .post-card {
+            background-color: #FFFFFF;
+            border: 1px solid #F1DEC9;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.2s;
+        }
+        
+        .post-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .post-title {
+            font-size: 18px;
+            color: #3C2A21;
+            margin-bottom: 12px;
+        }
+        
+        .post-date {
+            color: #777777;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .post-excerpt {
+            color: #666666;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .post-link {
+            display: inline-block;
+            color: #8D7B68;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .post-link:hover {
+            color: #A4907C;
+        }
+        
+        .notices-list {
+            margin-top: 20px;
+        }
+        
+        .notice-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #F1DEC9;
+        }
+        
+        .notice-item:last-child {
+            border-bottom: none;
+        }
+        
+        .notice-title {
+            font-size: 16px;
+            color: #3C2A21;
+            margin-bottom: 8px;
+        }
+        
+        .notice-date {
+            color: #777777;
+            font-size: 14px;
+        }
+        
+        .view-all-link {
+            display: inline-block;
+            margin-top: 16px;
+            color: #8D7B68;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .view-all-link:hover {
+            color: #A4907C;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="#" class="back-link">← 뒤로 가기</a>
+        <h1 class="page-title">보호소 프로필</h1>
+        
+        <div class="profile-card">
+            <div class="shelter-header">
+                <div class="shelter-image"></div>
+                <div class="shelter-info">
+                    <h2 class="shelter-name">해피동물보호소</h2>
+                    <div class="shelter-details">
+                        <div class="detail-item">
+                            <span class="detail-label">주소</span>
+                            <span class="detail-value">서울시 강남구 역삼동 123-45</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">전화</span>
+                            <span class="detail-value">02-1234-5678</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">이메일</span>
+                            <span class="detail-value">happy@shelter.org</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">운영시간</span>
+                            <span class="detail-value">화-일 10:00 - 18:00 (월요일 휴무)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">보호중인 강아지</span>
+                            <span class="detail-value">15마리</span>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-contact">문의하기</button>
+                        <button class="btn btn-support">후원하기</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">소개</h3>
+            <p class="description">
+                해피동물보호소는 2010년에 설립된 비영리 동물 보호 단체입니다. 
+                유기·유실 동물을 보호하고 새로운 가족을 찾아주는 것을 목표로 하고 있습니다.
+                모든 강아지들은 정기적인 건강 검진과 예방접종을 받으며, 중성화 수술 후 입양을 진행하고 있습니다.
+                봉사활동과 후원을 통한 많은 관심 부탁드립니다.
+            </p>
+        </div>
+        
+        <div class="profile-card">
+            <h3 class="section-title">보호중인 강아지들</h3>
+            <p class="description">현재 해피동물보호소에서 보호중인 강아지들을 소개합니다.</p>
+            
+            <div class="animals-grid">
+                <div class="animal-card">
+                    <div class="animal-image"></div>
+                    <div class="animal-info">
+                        <h4 class="animal-name">초코</h4>
+                        <p class="animal-details">말티즈 / 암컷 / 2세</p>
+                        <a href="#" class="animal-link">프로필 보기 →</a>
+                    </div>
+                </div>
+                
+                <div class="animal-card">
+                    <div class="animal-image"></div>
+                    <div class="animal-info">
+                        <h4 class="animal-name">뭉치</h4>
+                        <p class="animal-details">포메라니안 / 수컷 / 3세</p>
+                        <a href="#" class="animal-link">프로필 보기 →</a>
+                    </div>
+                </div>
+                
+                <div class="animal-card">
+                    <div class="animal-image"></div>
+                    <div class="animal-info">
+                        <h4 class="animal-name">별이</h4>
+                        <p class="animal-details">푸들 / 암컷 / 1세</p>
+                        <a href="#" class="animal-link">프로필 보기 →</a>
+                    </div>
+                </div>
+                
+                <div class="animal-card">
+                    <div class="animal-image"></div>
+                    <div class="animal-info">
+                        <h4 class="animal-name">감자</h4>
+                        <p class="animal-details">시츄 / 수컷 / 4세</p>
+                        <a href="#" class="animal-link">프로필 보기 →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#" class="view-all-link">모든 강아지 보기 →</a>
+        </div>
+        
+        <div class="profile-card">
+            <h3 class="section-title">최근 글</h3>
+            <p class="description">해피동물보호소에서 작성한 최근 글입니다.</p>
+            
+            <div class="posts-grid">
+                <div class="post-card">
+                    <h4 class="post-title">초코의 새로운 가족을 찾습니다</h4>
+                    <div class="post-date">2023.10.15</div>
+                    <p class="post-excerpt">사랑스러운 말티즈 초코가 새로운 가족을 기다리고 있습니다. 온순한 성격에 애정 표현이 많은 아이입니다...</p>
+                    <a href="#" class="post-link">자세히 보기 →</a>
+                </div>
+                
+                <div class="post-card">
+                    <h4 class="post-title">11월 정기 봉사활동 모집</h4>
+                    <div class="post-date">2023.10.10</div>
+                    <p class="post-excerpt">11월 정기 봉사활동을 모집합니다. 강아지 산책, 청소, 미용 등 다양한 활동에 참여하실 수 있습니다...</p>
+                    <a href="#" class="post-link">자세히 보기 →</a>
+                </div>
+                
+                <div class="post-card">
+                    <h4 class="post-title">감자의 입양 후기</h4>
+                    <div class="post-date">2023.10.05</div>
+                    <p class="post-excerpt">지난달 입양된 감자가 새로운 가정에서 잘 적응하고 있다는 소식을 전해드립니다. 입양 가족께서 보내주신...</p>
+                    <a href="#" class="post-link">자세히 보기 →</a>
+                </div>
+            </div>
+            
+            <a href="#" class="view-all-link">모든 글 보기 →</a>
+        </div>
+        
+        <div class="profile-card">
+            <h3 class="section-title">공지사항</h3>
+            <p class="description">해피동물보호소의 중요한 소식과 공지사항입니다.</p>
+            
+            <div class="notices-list">
+                <div class="notice-item">
+                    <h4 class="notice-title">10월 임시 휴관 안내</h4>
+                    <div class="notice-date">2023.10.20</div>
+                </div>
+                
+                <div class="notice-item">
+                    <h4 class="notice-title">입양 절차 변경 안내</h4>
+                    <div class="notice-date">2023.10.05</div>
+                </div>
+                
+                <div class="notice-item">
+                    <h4 class="notice-title">후원금 사용 내역 공개</h4>
+                    <div class="notice-date">2023.09.28</div>
+                </div>
+            </div>
+            
+            <a href="#" class="view-all-link">모든 공지사항 보기 →</a>
+        </div>
+    </div>
+</body>
+</html>

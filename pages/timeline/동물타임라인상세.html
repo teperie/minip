@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보호소 일상 상세보기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        
+        body {
+            background-color: #F9F9F9;
+            color: #000000;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        
+        .post-header {
+            border-bottom: 1px solid #F1DEC9;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .post-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #3C2A21;
+        }
+        
+        .post-meta {
+            display: flex;
+            align-items: center;
+            color: #777777;
+            font-size: 14px;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #F1DEC9;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8D7B68;
+            font-weight: bold;
+        }
+        
+        .post-date {
+            margin-left: auto;
+        }
+        
+        .post-content {
+            margin-bottom: 40px;
+            line-height: 1.6;
+            color: #666666;
+        }
+        
+        .post-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 20px 0;
+            background-color: #FFF8EA;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #A4907C;
+        }
+        
+        .comments-section {
+            border-top: 1px solid #F1DEC9;
+            padding-top: 30px;
+        }
+        
+        .comments-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #3C2A21;
+        }
+        
+        .comment {
+            display: flex;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #F9F9F9;
+        }
+        
+        .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #F1DEC9;
+            margin-right: 15px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8D7B68;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .comment-content {
+            flex-grow: 1;
+        }
+        
+        .comment-author {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #3C2A21;
+        }
+        
+        .comment-text {
+            color: #666666;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .comment-meta {
+            display: flex;
+            font-size: 13px;
+            color: #777777;
+        }
+        
+        .comment-date {
+            margin-right: 15px;
+        }
+        
+        .comment-reply {
+            color: #8D7B68;
+            cursor: pointer;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .pagination-button {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: #FFFFFF;
+            color: #8D7B68;
+            border: 1px solid #F1DEC9;
+            cursor: pointer;
+        }
+        
+        .pagination-button.active {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            border-color: #8D7B68;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="post-header">
+            <h1 class="post-title">루니의 첫 산책 일기</h1>
+            <div class="post-meta">
+                <div class="author-avatar">보</div>
+                <div class="author-name">보호소 지기</div>
+                <div class="post-date">2023년 11월 15일</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <p>오늘은 루니가 처음으로 산책을 나간 날입니다. 처음에는 조금 겁을 먹었지만, 점점 자신감을 가지고 걸을 수 있게 되었어요. 주변에서 지나가는 분들이 귀엽다고 쳐다봐주셔서 루니도 기분이 좋았나봐요.</p>
+            
+            <div class="post-image">게시글 이미지</div>
+            
+            <p>산책 후에는 간식으로 보상해주었더니 아주 만족스러워 하네요. 다음에는 더 멀리까지 산책 나가보려고 합니다. 루니의 성장을 지켜봐주세요!</p>
+        </div>
+        
+        <div class="comments-section">
+            <h2 class="comments-title">댓글 24</h2>
+            
+            <div class="comment">
+                <div class="comment-avatar">김</div>
+                <div class="comment-content">
+                    <div class="comment-author">김봉사</div>
+                    <p class="comment-text">와우! 루니가 정말 많이 컸네요. 다음 봉사활동 때 꼭 만나고 싶어요!</p>
+                    <div class="comment-meta">
+                        <span class="comment-date">2023년 11월 15일</span>
+                        <span class="comment-reply">답글 달기</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comment">
+                <div class="comment-avatar">이</div>
+                <div class="comment-content">
+                    <div class="comment-author">이후원</div>
+                    <p class="comment-text">정말 귀엽네요. 작은 후원이라도 보내드릴게요. 계속 발전하는 모습 지켜봐주세요!</p>
+                    <div class="comment-meta">
+                        <span class="comment-date">2023년 11월 15일</span>
+                        <span class="comment-reply">답글 달기</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comment">
+                <div class="comment-avatar">박</div>
+                <div class="comment-content">
+                    <div class="comment-author">박입양</div>
+                    <p class="comment-text">루니 정말 사랑스러워요. 입양 문의는 어떻게 해야 하나요?</p>
+                    <div class="comment-meta">
+                        <span class="comment-date">2023년 11월 16일</span>
+                        <span class="comment-reply">답글 달기</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <div class="pagination-button active">1</div>
+                <div class="pagination-button">2</div>
+                <div class="pagination-button">3</div>
+                <div class="pagination-button">></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

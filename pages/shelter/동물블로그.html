@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보호일지 - 루니</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        
+        body {
+            background-color: #F9F9F9;
+            color: #000000;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 30px;
+        }
+        
+        .blog-banner {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            height: 200px;
+            background: linear-gradient(to right, #8D7B68, #A4907C);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .main-content {
+            flex: 1;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+        
+        .widget {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .widget-title {
+            font-size: 18px;
+            color: #3C2A21;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #F1DEC9;
+        }
+        
+        .post-header {
+            border-bottom: 1px solid #F1DEC9;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .post-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #3C2A21;
+        }
+        
+        .post-meta {
+            display: flex;
+            align-items: center;
+            color: #777777;
+            font-size: 14px;
+        }
+        
+        .post-date {
+            margin-right: 15px;
+        }
+        
+        .post-content {
+            margin-bottom: 40px;
+            line-height: 1.6;
+            color: #666666;
+        }
+        
+        .post-content p {
+            margin-bottom: 20px;
+        }
+        
+        .post-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 20px 0;
+            background-color: #FFF8EA;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #A4907C;
+        }
+        
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #F1DEC9;
+            padding-top: 30px;
+            margin-top: 40px;
+        }
+        
+        .nav-button {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #F1DEC9;
+            color: #3C2A21;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .recent-posts {
+            margin-top: 40px;
+        }
+        
+        .recent-post-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #F9F9F9;
+        }
+        
+        .recent-post-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            background-color: #FFF8EA;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #A4907C;
+            font-size: 12px;
+        }
+        
+        .recent-post-title {
+            font-size: 15px;
+            color: #3C2A21;
+            margin-bottom: 5px;
+        }
+        
+        .recent-post-date {
+            font-size: 13px;
+            color: #777777;
+        }
+        
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #F1DEC9;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8D7B68;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .profile-info h3 {
+            font-size: 18px;
+            color: #3C2A21;
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            font-size: 14px;
+            color: #777777;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background-color: #FFF8EA;
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #8D7B68;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #777777;
+        }
+        
+        .guestbook-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #F9F9F9;
+        }
+        
+        .guestbook-author {
+            font-weight: bold;
+            color: #3C2A21;
+            margin-bottom: 5px;
+        }
+        
+        .guestbook-content {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .guestbook-date {
+            font-size: 12px;
+            color: #777777;
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-banner">루니의 보호일지</div>
+    
+    <div class="container">
+        <div class="main-content">
+            <div class="post-header">
+                <h1 class="post-title">루니의 첫 산책 일기</h1>
+                <div class="post-meta">
+                    <span class="post-date">2023년 11월 15일</span>
+                    <span class="post-views">조회수 243</span>
+                </div>
+            </div>
+            
+            <div class="post-content">
+                <p>오늘은 루니가 처음으로 산책을 나간 날입니다. 처음에는 조금 겁을 먹었지만, 점점 자신감을 가지고 걸을 수 있게 되었어요. 주변에서 지나가는 분들이 귀엽다고 쳐다봐주셔서 루니도 기분이 좋았나봐요.</p>
+                
+                <div class="post-image">산책 중인 루니 사진</div>
+                
+                <p>산책 코스는 보호소 근처 공원으로 정했어요. 나무가 많고 사람들이 많이 찾는 곳이라 사회화訓練에도 도움이 될 것 같았거든요. 루니는 처음 본 나뭇잎에 호기심을 보이기도 하고, 바람에 흔들리는 나뭇가지에 경계심을 보이기도 했어요.</p>
+                
+                <p>공원에서 만난 다른 강아지들과도 인사를 나누었는데, 처음에는 조금 긴장했지만 점점 편해지면서 냄새를 맡고 인사하는 법을 배웠어요. 사회화訓練은 루니 같은 보호 강아지에게 정말 중요하답니다.</p>
+                
+                <div class="post-image">다른 강아지와 인사하는 루니</div>
+                
+                <p>산책 후에는 간식으로 보상해주었더니 아주 만족스러워 하네요. 다음에는 더 멀리까지 산책 나가보려고 합니다. 루니의 성장을 지켜봐주세요!</p>
+            </div>
+            
+            <div class="post-navigation">
+                <a href="#" class="nav-button">← 이전 글: 루니의 보호소 도착일</a>
+                <a href="#" class="nav-button">다음 글: 루니의 건강검진 결과 →</a>
+            </div>
+            
+            <div class="recent-posts">
+                <h2 class="widget-title">최근 보호일지</h2>
+                
+                <div class="recent-post-item">
+                    <div class="recent-post-thumb">이미지</div>
+                    <div>
+                        <div class="recent-post-title">루니의 건강검진 결과</div>
+                        <div class="recent-post-date">2023년 11월 17일</div>
+                    </div>
+                </div>
+                
+                <div class="recent-post-item">
+                    <div class="recent-post-thumb">이미지</div>
+                    <div>
+                        <div class="recent-post-title">루니의 첫 산책 일기</div>
+                        <div class="recent-post-date">2023년 11월 15일</div>
+                    </div>
+                </div>
+                
+                <div class="recent-post-item">
+                    <div class="recent-post-thumb">이미지</div>
+                    <div>
+                        <div class="recent-post-title">루니의 보호소 도착일</div>
+                        <div class="recent-post-date">2023년 11월 10일</div>
+                    </div>
+                </div>
+                
+                <div class="recent-post-item">
+                    <div class="recent-post-thumb">이미지</div>
+                    <div>
+                        <div class="recent-post-title">새로운 가족을 기다리는 루니</div>
+                        <div class="recent-post-date">2023년 11월 5일</div>
+                    </div>
+                </div>
+                
+                <div class="recent-post-item">
+                    <div class="recent-post-thumb">이미지</div>
+                    <div>
+                        <div class="recent-post-title">루니의 하루 일과</div>
+                        <div class="recent-post-date">2023년 11월 3일</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="widget">
+                <div class="profile">
+                    <div class="profile-image">루니</div>
+                    <div class="profile-info">
+                        <h3>루니</h3>
+                        <p>2세 · 암컷 · 믹스견</p>
+                    </div>
+                </div>
+                
+                <p style="color: #666666; font-size: 14px; margin-bottom: 20px;">2023년 11월에 입소한 사랑스러운 강아지입니다. 사람을 좋아하고 장난감을 좋아해요.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">작성 글</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">356</div>
+                        <div class="stat-label">방문자</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">142</div>
+                        <div class="stat-label">댓글</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">43</div>
+                        <div class="stat-label">좋아요</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="widget">
+                <div class="profile">
+                    <div class="profile-image">행</div>
+                    <div class="profile-info">
+                        <h3>행복보호소</h3>
+                        <p>서울시 강남구</p>
+                    </div>
+                </div>
+                
+                <p style="color: #666666; font-size: 14px; margin-bottom: 15px;">2015년 설립된 동물보호소입니다. 유기동물 보호와 입양 캠페인을 진행하고 있습니다.</p>
+                
+                <div style="font-size: 14px; color: #777777;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>보호 중인 강아지</span>
+                        <span style="color: #8D7B68; font-weight: 500;">15마리</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>입양 완료</span>
+                        <span style="color: #8D7B68; font-weight: 500;">243마리</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>후원자</span>
+                        <span style="color: #8D7B68; font-weight: 500;">156명</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="widget">
+                <h2 class="widget-title">방명록</h2>
+                
+                <div class="guestbook-item">
+                    <div class="guestbook-author">김봉사</div>
+                    <div class="guestbook-content">루니가 정말 많이 컸네요! 다음 주 봉사활동 때 꼭 만나봐야겠어요.</div>
+                    <div class="guestbook-date">2023-11-16</div>
+                </div>
+                
+                <div class="guestbook-item">
+                    <div class="guestbook-author">박입양</div>
+                    <div class="guestbook-content">루니 너무 사랑스러워요. 입양 문의 드리고 싶습니다.</div>
+                    <div class="guestbook-date">2023-11-15</div>
+                </div>
+                
+                <div class="guestbook-item">
+                    <div class="guestbook-author">이후원</div>
+                    <div class="guestbook-content">정기후원 신청했어요. 루니와 다른 아이들도 잘 챙겨주세요.</div>
+                    <div class="guestbook-date">2023-11-14</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

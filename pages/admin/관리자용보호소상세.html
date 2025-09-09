@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보호소 상세 - 관리자</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #F9F9F9;
+            color: #3C2A21;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            padding: 0.75rem;
+            background-color: #F1DEC9;
+            color: #3C2A21;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3C2A21;
+        }
+
+        .status-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: #FFF8EA;
+            color: #8D7B68;
+            border: 2px solid #F1DEC9;
+        }
+
+        .status-approved {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .status-rejected {
+            background-color: #777777;
+            color: #FFFFFF;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-success {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .btn-success:hover {
+            background-color: #A4907C;
+        }
+
+        .btn-danger {
+            background-color: #777777;
+            color: #FFFFFF;
+        }
+
+        .btn-danger:hover {
+            background-color: #666666;
+        }
+
+        .btn-secondary {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+
+        .btn-secondary:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #F1DEC9;
+        }
+
+        .shelter-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .shelter-image {
+            width: 200px;
+            height: 200px;
+            background-color: #F1DEC9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8D7B68;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .shelter-basic-info h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #3C2A21;
+            margin-bottom: 0.5rem;
+        }
+
+        .shelter-basic-info .subtitle {
+            font-size: 1rem;
+            color: #777777;
+            margin-bottom: 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .info-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #777777;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: #3C2A21;
+            font-weight: 500;
+        }
+
+        .info-value a {
+            color: #8D7B68;
+            text-decoration: none;
+        }
+
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        .description-text {
+            font-size: 0.95rem;
+            color: #666666;
+            line-height: 1.7;
+            background-color: #FFF8EA;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #8D7B68;
+        }
+
+        .stats-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background-color: #FFF8EA;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #F1DEC9;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8D7B68;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #777777;
+            font-weight: 500;
+        }
+
+        .animals-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .animals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .animals-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .animal-card {
+            background-color: #FFF8EA;
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid #F1DEC9;
+            transition: transform 0.2s ease;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(60, 42, 33, 0.15);
+        }
+
+        .animal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .animal-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3C2A21;
+        }
+
+        .animal-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .animal-info {
+            font-size: 0.875rem;
+            color: #666666;
+        }
+
+        .activity-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: #FFF8EA;
+            border-radius: 8px;
+            border-left: 4px solid #A4907C;
+        }
+
+        .activity-date {
+            font-size: 0.8125rem;
+            color: #777777;
+            font-weight: 500;
+            min-width: 80px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-desc {
+            font-size: 0.8125rem;
+            color: #666666;
+        }
+
+        .admin-notes {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .notes-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 2px solid #F1DEC9;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            background-color: #FFF8EA;
+            color: #3C2A21;
+            outline: none;
+            transition: border-color 0.3s ease;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .notes-textarea:focus {
+            border-color: #8D7B68;
+        }
+
+        .notes-textarea::placeholder {
+            color: #777777;
+        }
+
+        .notes-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .status-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .shelter-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .shelter-image {
+                margin: 0 auto;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .animals-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="main-container">
+        <!-- 페이지 헤더 -->
+        <header class="page-header">
+            <div class="header-left">
+                <a href="#" class="back-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15,18 9,12 15,6"></polyline>
+                    </svg>
+                </a>
+                <h1 class="page-title">보호소 상세 정보</h1>
+            </div>
+            <div class="status-actions">
+                <span class="status-badge status-pending">승인 대기</span>
+                <button class="btn btn-success">승인</button>
+                <button class="btn btn-danger">거부</button>
+                <button class="btn btn-secondary">수정</button>
+            </div>
+        </header>
+
+        <!-- 기본 정보 섹션 -->
+        <section class="info-section">
+            <h2 class="section-title">보호소 기본 정보</h2>
+            
+            <div class="shelter-header">
+                <div class="shelter-image">🏠 보호소 사진</div>
+                <div class="shelter-basic-info">
+                    <h2>해피독 보호소</h2>
+                    <p class="subtitle">대형견 전문 보호소</p>
+                    <div class="description-text">
+                        해피독 보호소는 2015년에 설립된 대형견 전문 보호소입니다. 골든리트리버, 래브라도 등 대형견을 중심으로 보호하고 있으며, 
+                        넓은 운동장과 전문 수의사가 상주하여 체계적인 관리를 제공합니다. 현재까지 500마리 이상의 강아지들이 새로운 가족을 만나 
+                        행복한 삶을 시작했습니다.
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">보호소 등록번호</span>
+                    <span class="info-value">SH-2024-001234</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">대표자명</span>
+                    <span class="info-value">김보호</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">설립일</span>
+                    <span class="info-value">2015년 3월 15일</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">보호소 유형</span>
+                    <span class="info-value">민간 보호소</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">주소</span>
+                    <span class="info-value">서울특별시 강남구 대치동 123-45</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">연락처</span>
+                    <span class="info-value">02-1234-5678</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">이메일</span>
+                    <span class="info-value"><a href="mailto:info@happydog.com">info@happydog.com</a></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">웹사이트</span>
+                    <span class="info-value"><a href="#" target="_blank">www.happydog.com</a></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">운영시간</span>
+                    <span class="info-value">평일 09:00-18:00, 주말 10:00-17:00</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">휴무일</span>
+                    <span class="info-value">매주 월요일, 법정공휴일</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">등록 신청일</span>
+                    <span class="info-value">2024년 1월 15일</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">최종 수정일</span>
+                    <span class="info-value">2024년 3월 10일</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-grid">
+            <!-- 통계 정보 -->
+            <div>
+                <section class="stats-section">
+                    <h2 class="section-title">운영 현황</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-number">32</span>
+                            <span class="stat-label">보호 중</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">247</span>
+                            <span class="stat-label">총 입양</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">89%</span>
+                            <span class="stat-label">입양률</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">156</span>
+                            <span class="stat-label">후원자</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">42</span>
+                            <span class="stat-label">봉사자</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">9.2</span>
+                            <span class="stat-label">평점</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 보호 동물 현황 -->
+                <section class="animals-section">
+                    <div class="animals-header">
+                        <h2 class="section-title">보호 동물 현황</h2>
+                        <span class="info-value">총 32마리</span>
+                    </div>
+                    <div class="animals-list">
+                        <div class="animal-card">
+                            <div class="animal-header">
+                                <span class="animal-name">골디</span>
+                                <span class="animal-status">입양대기</span>
+                            </div>
+                            <div class="animal-info">골든리트리버 • 3세 • 수컷</div>
+                        </div>
+                        <div class="animal-card">
+                            <div class="animal-header">
+                                <span class="animal-name">해피</span>
+                                <span class="animal-status">입양대기</span>
+                            </div>
+                            <div class="animal-info">골든리트리버 • 2세 • 암컷</div>
+                        </div>
+                        <div class="animal-card">
+                            <div class="animal-header">
+                                <span class="animal-name">럭키</span>
+                                <span class="animal-status">치료중</span>
+                            </div>
+                            <div class="animal-info">래브라도 • 5세 • 수컷</div>
+                        </div>
+                        <div class="animal-card">
+                            <div class="animal-header">
+                                <span class="animal-name">썬</span>
+                                <span class="animal-status">입양대기</span>
+                            </div>
+                            <div class="animal-info">골든리트리버 • 1세 • 암컷</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 최근 활동 -->
+            <div>
+                <section class="activity-section">
+                    <h2 class="section-title">최근 활동</h2>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-date">03.15</div>
+                            <div class="activity-content">
+                                <div class="activity-title">새 강아지 구조</div>
+                                <div class="activity-desc">버려진 골든리트리버 새끼 2마리 구조</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-date">03.12</div>
+                            <div class="activity-content">
+                                <div class="activity-title">입양 성사</div>
+                                <div class="activity-desc">래브라도 '맥스' 새 가족을 만남</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-date">03.10</div>
+                            <div class="activity-content">
+                                <div class="activity-title">봉사활동</div>
+                                <div class="activity-desc">대학생 봉사단 15명 방문</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-date">03.08</div>
+                            <div class="activity-content">
+                                <div class="activity-title">의료진 검진</div>
+                                <div class="activity-desc">전체 보호 동물 정기 건강검진 완료</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-date">03.05</div>
+                            <div class="activity-content">
+                                <div class="activity-title">후원금 접수</div>
+                                <div class="activity-desc">○○기업에서 사료 후원금 전달</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 관리자 메모 -->
+                <section class="admin-notes">
+                    <h2 class="section-title">관리자 메모</h2>
+                    <textarea class="notes-textarea" placeholder="보호소 관련 내부 메모를 작성하세요...">
+시설 점검 필요 사항:
+- 운동장 울타리 보수 (3월 말 예정)
+- 급수 시설 점검 완료 (3/10)
+- 의료 장비 정기 점검 예정 (4월 초)
+
+승인 관련 참고사항:
+- 모든 서류 완비됨
+- 시설 점검 통과
+- 운영진 인터뷰 완료
+- 최종 승인 대기 중</textarea>
+                    <div class="notes-actions">
+                        <button class="btn btn-success">저장</button>
+                        <button class="btn btn-secondary">취소</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

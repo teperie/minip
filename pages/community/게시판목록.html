@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 게시판</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        
+        body {
+            background-color: #F9F9F9;
+            color: #000000;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            color: #3C2A21;
+            margin-bottom: 30px;
+        }
+        
+        .filter-section {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-label {
+            font-size: 14px;
+            color: #777777;
+            margin-right: 10px;
+        }
+        
+        select, input {
+            padding: 10px 15px;
+            border: 1px solid #F1DEC9;
+            border-radius: 4px;
+            background-color: #FFFFFF;
+            color: #666666;
+        }
+        
+        .search-input {
+            width: 250px;
+        }
+        
+        .search-button {
+            padding: 10px 20px;
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .post-list {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .post-header {
+            display: grid;
+            grid-template-columns: 1fr 100px 120px 80px 80px 80px 80px;
+            padding: 15px 20px;
+            background-color: #FFF8EA;
+            font-weight: bold;
+            color: #3C2A21;
+            border-bottom: 1px solid #F1DEC9;
+        }
+        
+        .post-header > div:nth-child(4),
+        .post-header > div:nth-child(5),
+        .post-header > div:nth-child(6) {
+            text-align: center;
+        }
+        
+        .post-item {
+            display: grid;
+            grid-template-columns: 1fr 100px 120px 80px 80px 80px 80px;
+            padding: 20px;
+            border-bottom: 1px solid #F9F9F9;
+        }
+        
+        .post-item:hover {
+            background-color: #FFF8EA;
+        }
+        
+        .post-title {
+            display: flex;
+            align-items: center;
+        }
+        
+        .label {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .label-adoption {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+        
+        .label-volunteer {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+        
+        .label-support {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+        
+        .label-question {
+            background-color: #777777;
+            color: #FFFFFF;
+        }
+        
+        .label-general {
+            background-color: #666666;
+            color: #FFFFFF;
+        }
+        
+        .post-title-text {
+            color: #3C2A21;
+            font-weight: 500;
+        }
+        
+        .post-author {
+            color: #777777;
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-date {
+            color: #777777;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .post-stat {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777777;
+            font-size: 14px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .page-button {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            background-color: #FFFFFF;
+            color: #8D7B68;
+            border: 1px solid #F1DEC9;
+            cursor: pointer;
+        }
+        
+        .page-button.active {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            border-color: #8D7B68;
+        }
+        
+        .write-button {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">회원 게시판</h1>
+        
+        <div class="filter-section">
+            <div class="filter-form">
+                <div class="filter-group">
+                    <span class="filter-label">게시글 종류:</span>
+                    <select>
+                        <option value="all">전체</option>
+                        <option value="adoption">입양 문의</option>
+                        <option value="volunteer">봉사 활동</option>
+                        <option value="support">후원 문의</option>
+                        <option value="question">질문</option>
+                        <option value="general">일반</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <span class="filter-label">작성자:</span>
+                    <input type="text" placeholder="닉네임">
+                </div>
+                
+                <div class="filter-group">
+                    <input type="text" class="search-input" placeholder="제목 또는 내용 검색">
+                    <button class="search-button">검색</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="post-list">
+            <div class="post-header">
+                <div>제목</div>
+                <div>작성자</div>
+                <div>작성일</div>
+                <div>조회</div>
+                <div>댓글</div>
+                <div>추천</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-adoption">입양</span>
+                    <span class="post-title-text">믹스견 루니 입양 문의드립니다</span>
+                </div>
+                <div class="post-author">강아지사랑</div>
+                <div class="post-date">2시간 전</div>
+                <div class="post-stat">142</div>
+                <div class="post-stat">12</div>
+                <div class="post-stat">24</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-volunteer">봉사</span>
+                    <span class="post-title-text">주말 봉사활동 함께 하실 분 구합니다</span>
+                </div>
+                <div class="post-author">행복보호소</div>
+                <div class="post-date">1일 전</div>
+                <div class="post-stat">89</div>
+                <div class="post-stat">7</div>
+                <div class="post-stat">15</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-support">후원</span>
+                    <span class="post-title-text">정기후원 방법 문의드려요</span>
+                </div>
+                <div class="post-author">후원이</div>
+                <div class="post-date">2일 전</div>
+                <div class="post-stat">76</div>
+                <div class="post-stat">5</div>
+                <div class="post-stat">9</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-question">질문</span>
+                    <span class="post-title-text">강아지 입양 전 준비사항이 궁금합니다</span>
+                </div>
+                <div class="post-author">입양예정</div>
+                <div class="post-date">3일 전</div>
+                <div class="post-stat">203</div>
+                <div class="post-stat">23</div>
+                <div class="post-stat">31</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-general">일반</span>
+                    <span class="post-title-text">우리집 강아지 자랑합니다!</span>
+                </div>
+                <div class="post-author">멍뭉이</div>
+                <div class="post-date">2023-11-10</div>
+                <div class="post-stat">321</div>
+                <div class="post-stat">45</div>
+                <div class="post-stat">67</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-adoption">입양</span>
+                    <span class="post-title-text">포메라니안 입양 가능한가요?</span>
+                </div>
+                <div class="post-author">포메사랑</div>
+                <div class="post-date">2023-11-09</div>
+                <div class="post-stat">98</div>
+                <div class="post-stat">8</div>
+                <div class="post-stat">12</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-volunteer">봉사</span>
+                    <span class="post-title-text">산책 봉사활동 후기 공유합니다</span>
+                </div>
+                <div class="post-author">산책매니아</div>
+                <div class="post-date">2023-11-08</div>
+                <div class="post-stat">154</div>
+                <div class="post-stat">14</div>
+                <div class="post-stat">28</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-support">후원</span>
+                    <span class="post-title-text">사료 후원합니다. 어떻게 보내면 될까요?</span>
+                </div>
+                <div class="post-author">도움이</div>
+                <div class="post-date">2023-11-07</div>
+                <div class="post-stat">87</div>
+                <div class="post-stat">6</div>
+                <div class="post-stat">11</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-question">질문</span>
+                    <span class="post-title-text">강아지 교육 어떻게 시키나요?</span>
+                </div>
+                <div class="post-author">새로운집사</div>
+                <div class="post-date">2023-11-06</div>
+                <div class="post-stat">176</div>
+                <div class="post-stat">19</div>
+                <div class="post-stat">22</div>
+                <div></div>
+            </div>
+            
+            <div class="post-item">
+                <div class="post-title">
+                    <span class="label label-general">일반</span>
+                    <span class="post-title-text">보호소 강아지들 사진 공유합니다</span>
+                </div>
+                <div class="post-author">사진작가</div>
+                <div class="post-date">2023-11-05</div>
+                <div class="post-stat">243</div>
+                <div class="post-stat">32</div>
+                <div class="post-stat">56</div>
+                <div></div>
+            </div>
+        </div>
+        
+        <div class="pagination">
+            <div class="page-button">〈</div>
+            <div class="page-button active">1</div>
+            <div class="page-button">2</div>
+            <div class="page-button">3</div>
+            <div class="page-button">4</div>
+            <div class="page-button">5</div>
+            <div class="page-button">〉</div>
+        </div>
+        
+        <div class="write-button">+</div>
+    </div>
+</body>
+</html>

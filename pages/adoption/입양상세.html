@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>입양 대기 동물 상세 - 동반자</title>
+    
+    <!-- CSS 파일들 -->    
+    <link rel="stylesheet" href="../../styles/reset.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/responsive.css">
+    
+    <!-- Feather Icons -->    
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        /* 페이지 전용 스타일 */
+        .adoption-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md);
+        }
+        
+        .breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: var(--font-size-sm);
+            color: var(--muted-foreground);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color var(--transition-normal);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+        
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .page-title {
+            font-size: var(--font-size-4xl);
+            color: var(--foreground);
+            font-weight: var(--font-weight-bold);
+        }
+        
+        .status-badge {
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-3xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        @media (max-width: 768px) {
+            .detail-content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-xl);
+            }
+        }
+        
+        .detail-image {
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: 0 8px 20px color-mix(in srgb, var(--primary) 15%, transparent);
+            border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+            transition: all var(--transition-normal);
+        }
+        
+        .detail-image:hover {
+            box-shadow: 0 12px 30px color-mix(in srgb, var(--primary) 25%, transparent);
+            transform: translateY(-2px);
+        }
+        
+        .detail-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform var(--transition-slow);
+        }
+        
+        .detail-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .detail-info {
+            background-color: color-mix(in srgb, var(--card) 98%, var(--secondary));
+            padding: var(--spacing-2xl);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 15%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+        }
+        
+        .info-section {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .info-title {
+            font-size: var(--font-size-lg);
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--secondary);
+            font-weight: var(--font-weight-semibold);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+        
+        .info-label {
+            color: var(--muted-foreground);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+        }
+        
+        .info-value {
+            color: var(--foreground);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-base);
+        }
+        
+        .description {
+            background-color: var(--muted);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            margin-top: var(--spacing-lg);
+            border: 1px solid color-mix(in srgb, var(--secondary) 40%, transparent);
+        }
+        
+        .description p {
+            color: var(--muted-foreground);
+            line-height: 1.8;
+            font-size: var(--font-size-base);
+        }
+        
+        .shelter-info {
+            background-color: var(--secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin-top: var(--spacing-xl);
+            border: 1px solid color-mix(in srgb, var(--secondary) 60%, transparent);
+        }
+        
+        .shelter-title {
+            font-size: var(--font-size-lg);
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+            font-weight: var(--font-weight-semibold);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .shelter-detail {
+            font-size: var(--font-size-base);
+            color: var(--secondary-foreground);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-2xl);
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 640px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        .adoption-btn {
+            font-size: var(--font-size-lg);
+            padding: var(--spacing-md) var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            justify-content: center;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-3xl);
+            padding-top: var(--spacing-2xl);
+            border-top: 2px solid var(--secondary);
+            gap: var(--spacing-md);
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-lg) var(--spacing-xl);
+            background-color: color-mix(in srgb, var(--card) 95%, var(--secondary));
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            color: var(--foreground);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 15%, transparent);
+            transition: all var(--transition-normal);
+            flex: 1;
+            border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+        }
+        
+        .nav-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 25%, transparent);
+            background-color: color-mix(in srgb, var(--card) 90%, var(--secondary));
+        }
+        
+        @media (max-width: 640px) {
+            .navigation {
+                flex-direction: column;
+            }
+        }
+        
+        .nav-prev {
+            text-align: left;
+        }
+        
+        .nav-next {
+            text-align: right;
+            flex-direction: row-reverse;
+        }
+        
+        .nav-text {
+            flex: 1;
+        }
+        
+        .nav-title {
+            font-size: var(--font-size-sm);
+            color: var(--muted-foreground);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .nav-name {
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            color: var(--foreground);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+    <div class="adoption-detail-container">
+        <div class="breadcrumb">
+            <a href="../../index.html">홈</a> &gt; <a href="#">입양 대기 동물</a> &gt; 상세 정보
+        </div>
+        
+        <div class="detail-header">
+            <h1 class="page-title">말티즈 "코코"</h1>
+            <div class="status-badge">입양 대기</div>
+        </div>
+        
+        <div class="detail-content">
+            <div class="detail-image">
+                <img src="https://via.placeholder.com/600x400?text=Adoption+Dog" alt="입양 대기 말티즈 코코">
+            </div>
+            
+            <div class="detail-info">
+                <div class="info-section">
+                    <h3 class="info-title">
+                        <i data-feather="info"></i>
+                        기본 정보
+                    </h3>
+                    <div class="info-grid">
+                        <div class="info-label">이름:</div>
+                        <div class="info-value">코코</div>
+                        
+                        <div class="info-label">품종:</div>
+                        <div class="info-value">말티즈</div>
+                        
+                        <div class="info-label">나이:</div>
+                        <div class="info-value">2세</div>
+                        
+                        <div class="info-label">성별:</div>
+                        <div class="info-value">암컷</div>
+                        
+                        <div class="info-label">몸무게:</div>
+                        <div class="info-value">4.2kg</div>
+                        
+                        <div class="info-label">중성화:</div>
+                        <div class="info-value">완료</div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h3 class="info-title">
+                        <i data-feather="heart"></i>
+                        성격 및 특징
+                    </h3>
+                    <div class="info-grid">
+                        <div class="info-label">성격:</div>
+                        <div class="info-value">활발함, 친근함, 애교많음</div>
+                        
+                        <div class="info-label">건강상태:</div>
+                        <div class="info-value">양호</div>
+                        
+                        <div class="info-label">예방접종:</div>
+                        <div class="info-value">완료</div>
+                        
+                        <div class="info-label">특징:</div>
+                        <div class="info-value">오른쪽 귀에 갈색 반점</div>
+                    </div>
+                </div>
+                
+                <div class="description">
+                    <h3 class="info-title">
+                        <i data-feather="file-text"></i>
+                        상세 설명
+                    </h3>
+                    <p>
+                        코코는 2023년 9월에 구조된 말티즈입니다. 처음에는 조금 소심했지만 
+                        지금은 매우 사랑스럽고 애교가 많아졌습니다. 산책을 좋아하고 장난감을 
+                        가지고 노는 것을 특히 좋아합니다. 기본적인 훈련(앉아, 기다려, 손)을 
+                        알고 있으며, 실내 배변 훈련도 완료되었습니다. 사람을 매우 좋아하고 
+                        다른 강아지들과도 잘 지내는 사교적인 성격입니다.
+                    </p>
+                </div>
+                
+                <div class="shelter-info">
+                    <div class="shelter-title">
+                        <i data-feather="home"></i>
+                        보호소 정보
+                    </div>
+                    <div class="shelter-detail">
+                        <i data-feather="building"></i>
+                        서울동물복지센터
+                    </div>
+                    <div class="shelter-detail">
+                        <i data-feather="map-pin"></i>
+                        서울특별시 강남구 테헤란로 123
+                    </div>
+                    <div class="shelter-detail">
+                        <i data-feather="phone"></i>
+                        전화: 02-1234-5678
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="입양신청작성폼.html" class="btn btn-primary adoption-btn">
+                        <i data-feather="heart"></i>
+                        입양 신청하기
+                    </a>
+                    <a href="#" class="btn btn-outline adoption-btn">
+                        <i data-feather="gift"></i>
+                        후원하기
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="#" class="nav-item nav-prev">
+                <i data-feather="chevron-left"></i>
+                <div class="nav-text">
+                    <div class="nav-title">이전 동물</div>
+                    <div class="nav-name">푸들 "초코"</div>
+                </div>
+            </a>
+            
+            <a href="#" class="nav-item nav-next">
+                <div class="nav-text">
+                    <div class="nav-title">다음 동물</div>
+                    <div class="nav-name">시츄 "몽이"</div>
+                </div>
+                <i data-feather="chevron-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!-- JavaScript 초기화 -->
+    <script>
+        // Feather 아이콘 초기화
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+    </script>
+</body>
+</html>

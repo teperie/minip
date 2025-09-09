@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>봉사 신청 - 댕댕케어</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #F9F9F9;
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(164, 144, 124, 0.2);
+        }
+
+        .header-title {
+            color: #3C2A21;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            color: #777777;
+            font-size: 1rem;
+        }
+
+        .filters-section {
+            background-color: #FFFFFF;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(164, 144, 124, 0.2);
+        }
+
+        .filters-title {
+            color: #3C2A21;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            color: #666666;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            padding: 0.8rem;
+            border: 1px solid rgba(164, 144, 124, 0.3);
+            border-radius: 6px;
+            background-color: #FFFFFF;
+            font-size: 0.9rem;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #8D7B68;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #A4907C;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #FFFFFF;
+            color: #8D7B68;
+            border: 1px solid #8D7B68;
+        }
+
+        .btn-secondary:hover {
+            background-color: #F1DEC9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        .calendar-container {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            border: 1px solid rgba(164, 144, 124, 0.2);
+            overflow: hidden;
+        }
+
+        .calendar-header {
+            background-color: #FFF8EA;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(164, 144, 124, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #8D7B68;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(141, 123, 104, 0.1);
+        }
+
+        .current-month {
+            color: #3C2A21;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .calendar-header-day {
+            background-color: rgba(241, 222, 201, 0.5);
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: #666666;
+            border-bottom: 1px solid rgba(164, 144, 124, 0.2);
+        }
+
+        .calendar-day {
+            min-height: 120px;
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(164, 144, 124, 0.15);
+            border-right: 1px solid rgba(164, 144, 124, 0.15);
+            position: relative;
+        }
+
+        .calendar-day:nth-child(7n) {
+            border-right: none;
+        }
+
+        .day-number {
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 0.5rem;
+        }
+
+        .day-number.other-month {
+            color: #CCCCCC;
+        }
+
+        .day-number.today {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .volunteer-event {
+            background-color: #F1DEC9;
+            border: 1px solid #8D7B68;
+            border-radius: 4px;
+            padding: 0.3rem 0.5rem;
+            margin-bottom: 0.3rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .volunteer-event:hover {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .volunteer-event.full {
+            background-color: rgba(102, 102, 102, 0.2);
+            color: #666666;
+            cursor: not-allowed;
+        }
+
+        .event-title {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .event-time {
+            color: #666666;
+            font-size: 0.7rem;
+        }
+
+        .event-spots {
+            color: #8D7B68;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            border: 1px solid rgba(164, 144, 124, 0.2);
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            background-color: #FFF8EA;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(164, 144, 124, 0.2);
+        }
+
+        .sidebar-title {
+            color: #3C2A21;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .sidebar-content {
+            padding: 1.5rem;
+        }
+
+        .selected-event {
+            margin-bottom: 1.5rem;
+        }
+
+        .selected-event-title {
+            color: #3C2A21;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-detail {
+            margin-bottom: 0.8rem;
+        }
+
+        .detail-label {
+            color: #666666;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-value {
+            color: #000000;
+            font-weight: 500;
+        }
+
+        .shelter-info {
+            background-color: rgba(241, 222, 201, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .shelter-name {
+            color: #3C2A21;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .shelter-location {
+            color: #777777;
+            font-size: 0.9rem;
+        }
+
+        .upcoming-list {
+            list-style: none;
+        }
+
+        .upcoming-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(164, 144, 124, 0.15);
+        }
+
+        .upcoming-item:last-child {
+            border-bottom: none;
+        }
+
+        .upcoming-title {
+            color: #000000;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .upcoming-meta {
+            color: #777777;
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .upcoming-spots {
+            color: #8D7B68;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background-color: #FFFFFF;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            color: #3C2A21;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: #666666;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(164, 144, 124, 0.3);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: #FFFFFF;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #8D7B68;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .legend {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .legend-available {
+            background-color: #F1DEC9;
+            border: 1px solid #8D7B68;
+        }
+
+        .legend-full {
+            background-color: rgba(102, 102, 102, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="header-title">봉사 신청</h1>
+            <p class="header-subtitle">우리 지역 보호소의 봉사활동에 참여해보세요</p>
+        </div>
+
+        <div class="filters-section">
+            <h3 class="filters-title">검색 및 필터</h3>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">지역</label>
+                    <select class="filter-select">
+                        <option>전체</option>
+                        <option>서울특별시</option>
+                        <option>경기도</option>
+                        <option>인천광역시</option>
+                        <option>부산광역시</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">활동 유형</label>
+                    <select class="filter-select">
+                        <option>전체</option>
+                        <option>산책 도우미</option>
+                        <option>사료 급식</option>
+                        <option>시설 청소</option>
+                        <option>목욕 도우미</option>
+                        <option>놀이 활동</option>
+                        <option>의료 보조</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">최소 봉사 시간</label>
+                    <select class="filter-select">
+                        <option>상관없음</option>
+                        <option>1시간 이상</option>
+                        <option>2시간 이상</option>
+                        <option>3시간 이상</option>
+                        <option>4시간 이상</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">최대 봉사 시간</label>
+                    <select class="filter-select">
+                        <option>상관없음</option>
+                        <option>2시간 이하</option>
+                        <option>4시간 이하</option>
+                        <option>6시간 이하</option>
+                        <option>8시간 이하</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-secondary">필터 초기화</button>
+                <button class="btn btn-primary">검색</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <div class="calendar-nav">
+                        <button class="nav-btn">‹</button>
+                        <div class="current-month">2024년 9월</div>
+                        <button class="nav-btn">›</button>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color legend-available"></div>
+                        <span>신청 가능</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-full"></div>
+                        <span>모집 마감</span>
+                    </div>
+                </div>
+
+                <div class="calendar-grid">
+                    <div class="calendar-header-day">일</div>
+                    <div class="calendar-header-day">월</div>
+                    <div class="calendar-header-day">화</div>
+                    <div class="calendar-header-day">수</div>
+                    <div class="calendar-header-day">목</div>
+                    <div class="calendar-header-day">금</div>
+                    <div class="calendar-header-day">토</div>
+
+                    <div class="calendar-day">
+                        <div class="day-number">1</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">2</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">3</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number today">4</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">5</div>
+                        <div class="volunteer-event" onclick="selectEvent('산책 도우미', '따뜻한보호소')">
+                            <div class="event-title">산책 도우미</div>
+                            <div class="event-time">14:00-17:00</div>
+                            <div class="event-spots">3/5명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">6</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">7</div>
+                        <div class="volunteer-event" onclick="selectEvent('사료 급식', '해피독보호소')">
+                            <div class="event-title">사료 급식</div>
+                            <div class="event-time">09:00-12:00</div>
+                            <div class="event-spots">0/4명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">8</div>
+                        <div class="volunteer-event" onclick="selectEvent('시설 청소', '사랑의보호소')">
+                            <div class="event-title">시설 청소</div>
+                            <div class="event-time">10:00-13:00</div>
+                            <div class="event-spots">5/5명</div>
+                        </div>
+                        <div class="volunteer-event full">
+                            <div class="event-title">목욕 도우미</div>
+                            <div class="event-time">15:00-18:00</div>
+                            <div class="event-spots">마감</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">9</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">10</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">11</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">12</div>
+                        <div class="volunteer-event" onclick="selectEvent('놀이 활동', '따뜻한보호소')">
+                            <div class="event-title">놀이 활동</div>
+                            <div class="event-time">15:00-17:00</div>
+                            <div class="event-spots">1/3명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">13</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">14</div>
+                        <div class="volunteer-event" onclick="selectEvent('산책 도우미', '해피독보호소')">
+                            <div class="event-title">산책 도우미</div>
+                            <div class="event-time">16:00-19:00</div>
+                            <div class="event-spots">2/6명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">15</div>
+                        <div class="volunteer-event" onclick="selectEvent('의료 보조', '동물사랑센터')">
+                            <div class="event-title">의료 보조</div>
+                            <div class="event-time">11:00-14:00</div>
+                            <div class="event-spots">0/2명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">16</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">17</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">18</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">19</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">20</div>
+                        <div class="volunteer-event" onclick="selectEvent('시설 정리', '사랑의보호소')">
+                            <div class="event-title">시설 정리</div>
+                            <div class="event-time">13:00-16:00</div>
+                            <div class="event-spots">3/4명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">21</div>
+                        <div class="volunteer-event" onclick="selectEvent('산책 도우미', '따뜻한보호소')">
+                            <div class="event-title">산책 도우미</div>
+                            <div class="event-time">14:00-17:00</div>
+                            <div class="event-spots">0/5명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">22</div>
+                        <div class="volunteer-event" onclick="selectEvent('특별 이벤트', '해피독보호소')">
+                            <div class="event-title">특별 이벤트</div>
+                            <div class="event-time">10:00-16:00</div>
+                            <div class="event-spots">8/10명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">23</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">24</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">25</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">26</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">27</div>
+                        <div class="volunteer-event" onclick="selectEvent('놀이 활동', '동물사랑센터')">
+                            <div class="event-title">놀이 활동</div>
+                            <div class="event-time">15:00-18:00</div>
+                            <div class="event-spots">1/4명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">28</div>
+                        <div class="volunteer-event" onclick="selectEvent('사료 급식', '사랑의보호소')">
+                            <div class="event-title">사료 급식</div>
+                            <div class="event-time">08:00-11:00</div>
+                            <div class="event-spots">2/3명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">29</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">30</div>
+                        <div class="volunteer-event" onclick="selectEvent('산책 도우미', '해피독보호소')">
+                            <div class="event-title">산책 도우미</div>
+                            <div class="event-time">16:00-19:00</div>
+                            <div class="event-spots">0/6명</div>
+                        </div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number other-month">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-header">
+                        <h3 class="sidebar-title">선택한 봉사 활동</h3>
+                    </div>
+                    <div class="sidebar-content">
+                        <div class="selected-event" id="selectedEvent">
+                            <p style="color: #777777; text-align: center; padding: 2rem 0;">
+                                달력에서 봉사 활동을 선택해주세요
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-header">
+                        <h3 class="sidebar-title">다가오는 내 봉사 일정</h3>
+                    </div>
+                    <div class="sidebar-content">
+                        <ul class="upcoming-list">
+                            <li class="upcoming-item">
+                                <div class="upcoming-title">산책 도우미 - 사랑의보호소</div>
+                                <div class="upcoming-meta">9월 6일 (금) 14:00-17:00</div>
+                                <div class="upcoming-spots">승인 대기</div>
+                            </li>
+                            <li class="upcoming-item">
+                                <div class="upcoming-title">시설 청소 - 해피독보호소</div>
+                                <div class="upcoming-meta">9월 10일 (화) 10:00-13:00</div>
+                                <div class="upcoming-spots">승인 완료</div>
+                            </li>
+                            <li class="upcoming-item">
+                                <div class="upcoming-title">놀이 활동 - 따뜻한보호소</div>
+                                <div class="upcoming-meta">9월 15일 (일) 15:00-17:00</div>
+                                <div class="upcoming-spots">승인 완료</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="applicationModal">
+        <div class="modal">
+            <h2 class="modal-title">봉사 신청서</h2>
+            <form>
+                <div class="form-group">
+                    <label class="form-label">신청자 이름</label>
+                    <input type="text" class="form-input" value="김강아지" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">연락처</label>
+                    <input type="tel" class="form-input" placeholder="010-0000-0000">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">이메일</label>
+                    <input type="email" class="form-input" placeholder="example@email.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">봉사 경험</label>
+                    <textarea class="form-input form-textarea" placeholder="동물 봉사 경험이 있다면 간단히 작성해주세요..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">신청 동기 및 각오</label>
+                    <textarea class="form-input form-textarea" placeholder="봉사 활동에 참여하고 싶은 이유를 작성해주세요..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">특이사항</label>
+                    <textarea class="form-input form-textarea" placeholder="알레르기, 건강상 주의사항 등이 있다면 작성해주세요..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">취소</button>
+                    <button type="submit" class="btn btn-primary">신청하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

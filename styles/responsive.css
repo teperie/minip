@@ -1,0 +1,184 @@
+===== RESPONSIVE DESIGN =====
+
+/* Mobile First Approach */
+/* Base styles are for mobile devices */
+
+/* Small screens (smartphones) */
+@media (max-width: 479px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .hero-subtitle {
+    font-size: var(--font-size-lg);
+  }
+  
+  .hero-action-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+  
+  .action-btn {
+    height: 5rem;
+    padding: var(--spacing-md);
+  }
+  
+  .search-container {
+    display: none !important;
+  }
+  
+  .auth-buttons {
+    gap: var(--spacing-sm);
+  }
+  
+  .auth-buttons .btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-action-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+  
+  .nav-desktop {
+    display: none;
+  }
+  
+  .nav-mobile {
+    display: flex;
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1024px) {
+  .nav-mobile {
+    display: none;
+  }
+  
+  .nav-desktop {
+    display: flex;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+  
+  .hero-title {
+    font-size: 4rem;
+  }
+  
+  .hero-subtitle {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+/* Print styles */
+@media print {
+  .header-nav,
+  .hero-actions,
+  .mobile-menu-overlay {
+    display: none !important;
+  }
+  
+  .hero {
+    height: auto;
+    background: var(--card) !important;
+  }
+  
+  .hero-title,
+  .hero-subtitle {
+    color: var(--foreground) !important;
+  }
+  
+  /* Print optimizations for warm theme */
+  .animal-card,
+  .community-post {
+    border: 2px solid var(--border) !important;
+    box-shadow: none !important;
+  }
+  
+  .btn {
+    border: 2px solid var(--primary) !important;
+    background: transparent !important;
+    color: var(--primary) !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: color-mix(in srgb, var(--foreground) 80%, transparent);
+    --muted-foreground: var(--foreground);
+  }
+  
+  .btn-outline {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .action-btn:hover,
+  .btn:hover {
+    transform: none !important;
+  }
+}
+
+/* Dark mode support (준비용) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark theme using warm browns */
+    --background: #2C1810;
+    --foreground: #FFF8EA;
+    --card: #3C2A21;
+    --card-foreground: #FFF8EA;
+    --popover: #3C2A21;
+    --popover-foreground: #FFF8EA;
+    --primary: #A4907C;
+    --primary-foreground: #2C1810;
+    --secondary: #4A3728;
+    --secondary-foreground: #FFF8EA;
+    --muted: #4A3728;
+    --muted-foreground: #A4907C;
+    --accent: #8D7B68;
+    --accent-foreground: #FFF8EA;
+    --destructive: #EF4444;
+    --destructive-foreground: #FFFFFF;
+    --border: color-mix(in srgb, var(--primary) 30%, transparent);
+    --input: #4A3728;
+    --input-background: #4A3728;
+    --ring: var(--primary);
+    
+    /* Update mapped colors */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-primary: var(--primary);
+    --color-primary-dark: #8D7B68;
+    --color-secondary: var(--secondary);
+    --color-accent: var(--accent);
+    --color-border: var(--border);
+    --color-input: var(--input-background);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+  }
+}

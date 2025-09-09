@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 관리 - 관리자</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #F9F9F9;
+            color: #3C2A21;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3C2A21;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: #777777;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #8D7B68;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #777777;
+        }
+
+        .filters-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .filters-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #F1DEC9;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #3C2A21;
+        }
+
+        .filter-select,
+        .filter-input {
+            padding: 0.75rem 1rem;
+            border: 2px solid #F1DEC9;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            background-color: #FFF8EA;
+            color: #3C2A21;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-select:focus,
+        .filter-input:focus {
+            border-color: #8D7B68;
+        }
+
+        .filter-input::placeholder {
+            color: #777777;
+        }
+
+        .date-range {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .date-separator {
+            font-size: 0.875rem;
+            color: #777777;
+            text-align: center;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #F1DEC9;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #A4907C;
+        }
+
+        .btn-secondary {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+
+        .btn-secondary:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .btn-success {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-danger {
+            background-color: #777777;
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-warning {
+            background-color: #A4907C;
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-info {
+            background-color: #666666;
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .content-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #3C2A21;
+        }
+
+        .results-count {
+            font-size: 0.875rem;
+            color: #777777;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .members-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            min-width: 1000px;
+        }
+
+        .members-table th,
+        .members-table td {
+            text-align: left;
+            padding: 1rem 0.75rem;
+            border-bottom: 1px solid #F1DEC9;
+        }
+
+        .members-table th {
+            background-color: #FFF8EA;
+            font-weight: 600;
+            color: #3C2A21;
+            font-size: 0.875rem;
+            border-top: 1px solid #F1DEC9;
+            white-space: nowrap;
+        }
+
+        .members-table td {
+            font-size: 0.875rem;
+            color: #3C2A21;
+        }
+
+        .members-table tr:hover {
+            background-color: rgba(241, 222, 201, 0.3);
+        }
+
+        .member-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #F1DEC9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8D7B68;
+            font-size: 0.875rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .member-details h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 0.25rem;
+        }
+
+        .member-details p {
+            font-size: 0.75rem;
+            color: #777777;
+        }
+
+        .member-type-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .type-user {
+            background-color: #FFF8EA;
+            color: #8D7B68;
+            border: 1px solid #F1DEC9;
+        }
+
+        .type-shelter {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .type-admin {
+            background-color: #777777;
+            color: #FFFFFF;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-active {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .status-dormant {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .status-withdrawn {
+            background-color: #666666;
+            color: #FFFFFF;
+        }
+
+        .status-suspended {
+            background-color: #777777;
+            color: #FFFFFF;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #8D7B68;
+        }
+
+        .contact-info {
+            font-size: 0.75rem;
+            color: #666666;
+        }
+
+        .contact-info a {
+            color: #8D7B68;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .date-info {
+            font-size: 0.75rem;
+            color: #666666;
+        }
+
+        .warning-badge {
+            background-color: #A4907C;
+            color: #FFFFFF;
+            padding: 0.125rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+        }
+
+        .pagination-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            list-style: none;
+        }
+
+        .page-item {
+            display: flex;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            padding: 0.5rem 0.75rem;
+            min-width: 40px;
+            min-height: 40px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #3C2A21;
+            text-decoration: none;
+            background-color: #FFFFFF;
+            border: 1px solid #F1DEC9;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .page-link:hover {
+            background-color: #FFF8EA;
+            border-color: #8D7B68;
+        }
+
+        .page-item.active .page-link {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            border-color: #8D7B68;
+        }
+
+        .page-item.disabled .page-link {
+            color: #777777;
+            background-color: #F9F9F9;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-actions {
+                flex-direction: column;
+            }
+
+            .date-range {
+                grid-template-columns: 1fr;
+            }
+
+            .date-separator {
+                display: none;
+            }
+
+            .actions-cell {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="main-container">
+        <!-- 페이지 헤더 -->
+        <header class="page-header">
+            <div class="page-title-section">
+                <h1 class="page-title">회원 관리</h1>
+                <p class="page-subtitle">플랫폼 회원을 조회하고 관리할 수 있습니다</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-number">2,847</span>
+                    <span class="stat-label">전체 회원</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">156</span>
+                    <span class="stat-label">보호소 회원</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">23</span>
+                    <span class="stat-label">제재 중</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 검색 및 필터 섹션 -->
+        <section class="filters-section">
+            <h2 class="filters-title">검색 및 필터</h2>
+            
+            <!-- 검색 조건 -->
+            <div class="filter-section">
+                <h3 class="filter-section-title">검색 조건</h3>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label class="filter-label">회원 ID</label>
+                        <input type="text" class="filter-input" placeholder="회원 ID를 입력하세요">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">닉네임</label>
+                        <input type="text" class="filter-input" placeholder="닉네임을 입력하세요">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">이메일</label>
+                        <input type="email" class="filter-input" placeholder="이메일을 입력하세요">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">가입일 범위</label>
+                        <div class="date-range">
+                            <input type="date" class="filter-input">
+                            <span class="date-separator">~</span>
+                            <input type="date" class="filter-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 필터링 조건 -->
+            <div class="filter-section">
+                <h3 class="filter-section-title">필터링 조건</h3>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label class="filter-label">계정 유형</label>
+                        <select class="filter-select">
+                            <option value="">전체</option>
+                            <option value="user">일반 회원</option>
+                            <option value="shelter">보호소 회원</option>
+                            <option value="admin">관리자</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">계정 상태</label>
+                        <select class="filter-select">
+                            <option value="">전체</option>
+                            <option value="active">활성</option>
+                            <option value="dormant">휴면</option>
+                            <option value="withdrawn">탈퇴</option>
+                            <option value="suspended">제재됨</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">제재 기간</label>
+                        <div class="date-range">
+                            <input type="date" class="filter-input">
+                            <span class="date-separator">~</span>
+                            <input type="date" class="filter-input">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">최근 로그인</label>
+                        <select class="filter-select">
+                            <option value="">전체</option>
+                            <option value="today">오늘</option>
+                            <option value="week">1주일 이내</option>
+                            <option value="month">1개월 이내</option>
+                            <option value="3months">3개월 이내</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label class="filter-label">게시글 수</label>
+                        <select class="filter-select">
+                            <option value="">전체</option>
+                            <option value="0">0개</option>
+                            <option value="1-10">1-10개</option>
+                            <option value="11-50">11-50개</option>
+                            <option value="51+">51개 이상</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">댓글 수</label>
+                        <select class="filter-select">
+                            <option value="">전체</option>
+                            <option value="0">0개</option>
+                            <option value="1-50">1-50개</option>
+                            <option value="51-200">51-200개</option>
+                            <option value="201+">201개 이상</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">신고된 횟수</label>
+                        <select class="filter-select">
+                            <option value="">전체</option>
+                            <option value="0">0회</option>
+                            <option value="1-3">1-3회</option>
+                            <option value="4-10">4-10회</option>
+                            <option value="11+">11회 이상</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">제재 이력</label>
+                        <select class="filter-select">
+                            <option value="">전체</option>
+                            <option value="yes">있음</option>
+                            <option value="no">없음</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button class="btn btn-primary">검색</button>
+                <button class="btn btn-secondary">초기화</button>
+            </div>
+        </section>
+
+        <!-- 회원 목록 -->
+        <section class="content-section">
+            <div class="table-header">
+                <h2 class="table-title">회원 목록</h2>
+                <div class="results-count">총 2,847명의 회원</div>
+            </div>
+
+            <div class="table-container">
+                <table class="members-table">
+                    <thead>
+                        <tr>
+                            <th>회원 정보</th>
+                            <th>유형</th>
+                            <th>상태</th>
+                            <th>가입일</th>
+                            <th>최근 로그인</th>
+                            <th>활동 현황</th>
+                            <th>신고/제재</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="member-info">
+                                    <div class="member-avatar">김</div>
+                                    <div class="member-details">
+                                        <h4>김사랑 (love_dog)</h4>
+                                        <p class="contact-info">
+                                            <a href="mailto:love@example.com">love@example.com</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="member-type-badge type-user">일반회원</span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-active">활성</span>
+                            </td>
+                            <td>
+                                <div class="date-info">2024.01.15</div>
+                            </td>
+                            <td>
+                                <div class="date-info">2024.03.20<br>14:30</div>
+                            </td>
+                            <td>
+                                <div>게시글: <span class="stat-value">12</span></div>
+                                <div>댓글: <span class="stat-value">45</span></div>
+                            </td>
+                            <td>
+                                <div>신고: <span class="stat-value">0</span></div>
+                                <div>제재: <span class="stat-value">없음</span></div>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                    <button class="btn btn-warning">제재</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="member-info">
+                                    <div class="member-avatar">해</div>
+                                    <div class="member-details">
+                                        <h4>해피독보호소 (happydog_shelter)</h4>
+                                        <p class="contact-info">
+                                            <a href="mailto:info@happydog.com">info@happydog.com</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="member-type-badge type-shelter">보호소</span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-active">활성</span>
+                            </td>
+                            <td>
+                                <div class="date-info">2023.11.08</div>
+                            </td>
+                            <td>
+                                <div class="date-info">2024.03.20<br>09:15</div>
+                            </td>
+                            <td>
+                                <div>게시글: <span class="stat-value">89</span></div>
+                                <div>댓글: <span class="stat-value">156</span></div>
+                            </td>
+                            <td>
+                                <div>신고: <span class="stat-value">2</span></div>
+                                <div>제재: <span class="stat-value">없음</span></div>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                    <button class="btn btn-success">승인</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="member-info">
+                                    <div class="member-avatar">박</div>
+                                    <div class="member-details">
+                                        <h4>박준호 (jun_park)</h4>
+                                        <p class="contact-info">
+                                            <a href="mailto:jun@example.com">jun@example.com</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="member-type-badge type-user">일반회원</span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-suspended">제재됨</span>
+                                <span class="warning-badge">~24.03.27</span>
+                            </td>
+                            <td>
+                                <div class="date-info">2024.02.03</div>
+                            </td>
+                            <td>
+                                <div class="date-info">2024.03.18<br>22:45</div>
+                            </td>
+                            <td>
+                                <div>게시글: <span class="stat-value">3</span></div>
+                                <div>댓글: <span class="stat-value">8</span></div>
+                            </td>
+                            <td>
+                                <div>신고: <span class="stat-value">5</span></div>
+                                <div>제재: <span class="stat-value">1회</span></div>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                    <button class="btn btn-danger">해제</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="member-info">
+                                    <div class="member-avatar">이</div>
+                                    <div class="member-details">
+                                        <h4>이영희 (young_lee)</h4>
+                                        <p class="contact-info">
+                                            <a href="mailto:young@example.com">young@example.com</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="member-type-badge type-user">일반회원</span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-dormant">휴면</span>
+                            </td>
+                            <td>
+                                <div class="date-info">2023.08.22</div>
+                            </td>
+                            <td>
+                                <div class="date-info">2023.12.15<br>16:20</div>
+                            </td>
+                            <td>
+                                <div>게시글: <span class="stat-value">24</span></div>
+                                <div>댓글: <span class="stat-value">67</span></div>
+                            </td>
+                            <td>
+                                <div>신고: <span class="stat-value">1</span></div>
+                                <div>제재: <span class="stat-value">없음</span></div>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                    <button class="btn btn-success">활성화</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="member-info">
+                                    <div class="member-avatar">관</div>
+                                    <div class="member-details">
+                                        <h4>관리자 (admin_user)</h4>
+                                        <p class="contact-info">
+                                            <a href="mailto:admin@dongbanja.com">admin@dongbanja.com</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="member-type-badge type-admin">관리자</span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-active">활성</span>
+                            </td>
+                            <td>
+                                <div class="date-info">2023.01.01</div>
+                            </td>
+                            <td>
+                                <div class="date-info">2024.03.20<br>15:45</div>
+                            </td>
+                            <td>
+                                <div>게시글: <span class="stat-value">156</span></div>
+                                <div>댓글: <span class="stat-value">289</span></div>
+                            </td>
+                            <td>
+                                <div>신고: <span class="stat-value">0</span></div>
+                                <div>제재: <span class="stat-value">없음</span></div>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="member-info">
+                                    <div class="member-avatar">최</div>
+                                    <div class="member-details">
+                                        <h4>최민수 (min_choi)</h4>
+                                        <p class="contact-info">
+                                            <a href="mailto:min@example.com">min@example.com</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="member-type-badge type-user">일반회원</span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-withdrawn">탈퇴</span>
+                            </td>
+                            <td>
+                                <div class="date-info">2023.05.12</div>
+                            </td>
+                            <td>
+                                <div class="date-info">2024.02.28<br>11:30</div>
+                            </td>
+                            <td>
+                                <div>게시글: <span class="stat-value">7</span></div>
+                                <div>댓글: <span class="stat-value">19</span></div>
+                            </td>
+                            <td>
+                                <div>신고: <span class="stat-value">0</span></div>
+                                <div>제재: <span class="stat-value">없음</span></div>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 페이지네이션 -->
+            <nav class="pagination-nav">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a href="#" class="page-link">이전</a>
+                    </li>
+                    <li class="page-item active">
+                        <a href="#" class="page-link">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">다음</a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>

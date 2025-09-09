@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>봉사 일정 관리</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #F9F9F9;
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(164, 144, 124, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            color: #3C2A21;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #A4907C;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #FFFFFF;
+            color: #8D7B68;
+            border: 1px solid #8D7B68;
+        }
+
+        .btn-secondary:hover {
+            background-color: #F1DEC9;
+        }
+
+        .calendar-container {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            border: 1px solid rgba(164, 144, 124, 0.2);
+            overflow: hidden;
+        }
+
+        .calendar-header {
+            background-color: #FFF8EA;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(164, 144, 124, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #8D7B68;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(141, 123, 104, 0.1);
+        }
+
+        .current-month {
+            color: #3C2A21;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .view-toggle {
+            display: flex;
+            background-color: #FFFFFF;
+            border: 1px solid #8D7B68;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .view-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            color: #8D7B68;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .calendar-header-day {
+            background-color: rgba(241, 222, 201, 0.5);
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: #666666;
+            border-bottom: 1px solid rgba(164, 144, 124, 0.2);
+        }
+
+        .calendar-day {
+            min-height: 120px;
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(164, 144, 124, 0.15);
+            border-right: 1px solid rgba(164, 144, 124, 0.15);
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .calendar-day:hover {
+            background-color: rgba(241, 222, 201, 0.3);
+        }
+
+        .calendar-day:nth-child(7n) {
+            border-right: none;
+        }
+
+        .day-number {
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 0.5rem;
+        }
+
+        .day-number.other-month {
+            color: #CCCCCC;
+        }
+
+        .day-number.today {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .event {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .event:hover {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .event-full {
+            background-color: rgba(102, 102, 102, 0.2);
+            color: #666666;
+        }
+
+        .add-event-btn {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            width: 20px;
+            height: 20px;
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-day:hover .add-event-btn {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background-color: #FFFFFF;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            color: #3C2A21;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: #666666;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(164, 144, 124, 0.3);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: #FFFFFF;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #8D7B68;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background-color: #FFFFFF;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(164, 144, 124, 0.2);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8D7B68;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="header-title">봉사 일정 관리</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary">일정 내보내기</button>
+                <button class="btn btn-primary" onclick="openModal()">새 일정 등록</button>
+            </div>
+        </div>
+
+        <div class="quick-stats">
+            <div class="stat-box">
+                <div class="stat-number">8</div>
+                <div class="stat-label">이번 달 등록 일정</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">25</div>
+                <div class="stat-label">총 봉사 신청자</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">3</div>
+                <div class="stat-label">모집 마감 일정</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">5</div>
+                <div class="stat-label">진행 예정 일정</div>
+            </div>
+        </div>
+
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="calendar-nav">
+                    <button class="nav-btn">‹</button>
+                    <div class="current-month">2024년 9월</div>
+                    <button class="nav-btn">›</button>
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active">월간</button>
+                    <button class="view-btn">주간</button>
+                    <button class="view-btn">일간</button>
+                </div>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="calendar-header-day">일</div>
+                <div class="calendar-header-day">월</div>
+                <div class="calendar-header-day">화</div>
+                <div class="calendar-header-day">수</div>
+                <div class="calendar-header-day">목</div>
+                <div class="calendar-header-day">금</div>
+                <div class="calendar-header-day">토</div>
+
+                <div class="calendar-day">
+                    <div class="day-number">1</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">2</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">3</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number today">4</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">5</div>
+                    <div class="event">산책 도우미 (3/5명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">6</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">7</div>
+                    <div class="event">사료 급식 (0/4명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">8</div>
+                    <div class="event">시설 청소 (5/5명)</div>
+                    <div class="event event-full">목욕 도우미 (마감)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">9</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">10</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">11</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">12</div>
+                    <div class="event">놀이 활동 (1/3명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">13</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">14</div>
+                    <div class="event">산책 도우미 (2/6명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">15</div>
+                    <div class="event">의료 보조 (0/2명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">16</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">17</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">18</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">19</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">20</div>
+                    <div class="event">시설 정리 (3/4명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">21</div>
+                    <div class="event">산책 도우미 (0/5명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">22</div>
+                    <div class="event">특별 이벤트 (8/10명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">23</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">24</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">25</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">26</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">27</div>
+                    <div class="event">놀이 활동 (1/4명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">28</div>
+                    <div class="event">사료 급식 (2/3명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">29</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">30</div>
+                    <div class="event">산책 도우미 (0/6명)</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number other-month">1</div>
+                    <button class="add-event-btn">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal">
+            <h2 class="modal-title">새 봉사 일정 등록</h2>
+            <form>
+                <div class="form-group">
+                    <label class="form-label">봉사 활동명</label>
+                    <input type="text" class="form-input" placeholder="예: 강아지 산책 도우미">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">날짜</label>
+                    <input type="date" class="form-input">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">시작 시간</label>
+                        <input type="time" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">종료 시간</label>
+                        <input type="time" class="form-input">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">모집 인원</label>
+                        <input type="number" class="form-input" min="1" max="20" placeholder="5">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">최소 봉사 시간</label>
+                        <input type="number" class="form-input" min="1" placeholder="3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">활동 내용</label>
+                    <textarea class="form-input form-textarea" placeholder="봉사 활동에 대한 자세한 설명을 입력해주세요..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">준비물 및 유의사항</label>
+                    <textarea class="form-input form-textarea" placeholder="봉사자가 준비해야 할 물품이나 유의사항을 입력해주세요..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">취소</button>
+                    <button type="submit" class="btn btn-primary">등록하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

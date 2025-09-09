@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보호소 관리 - 관리자</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #F9F9F9;
+            color: #3C2A21;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3C2A21;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: #777777;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #8D7B68;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #777777;
+        }
+
+        .filters-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .filters-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 1rem;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #3C2A21;
+        }
+
+        .filter-select,
+        .filter-input {
+            padding: 0.75rem 1rem;
+            border: 2px solid #F1DEC9;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            background-color: #FFF8EA;
+            color: #3C2A21;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-select:focus,
+        .filter-input:focus {
+            border-color: #8D7B68;
+        }
+
+        .filter-input::placeholder {
+            color: #777777;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #A4907C;
+        }
+
+        .btn-secondary {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+
+        .btn-secondary:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .btn-success {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-danger {
+            background-color: #777777;
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-info {
+            background-color: #A4907C;
+            color: #FFFFFF;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .content-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #3C2A21;
+        }
+
+        .results-count {
+            font-size: 0.875rem;
+            color: #777777;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .shelters-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        .shelters-table th,
+        .shelters-table td {
+            text-align: left;
+            padding: 1rem 0.75rem;
+            border-bottom: 1px solid #F1DEC9;
+        }
+
+        .shelters-table th {
+            background-color: #FFF8EA;
+            font-weight: 600;
+            color: #3C2A21;
+            font-size: 0.875rem;
+            border-top: 1px solid #F1DEC9;
+        }
+
+        .shelters-table td {
+            font-size: 0.875rem;
+            color: #3C2A21;
+        }
+
+        .shelters-table tr:hover {
+            background-color: rgba(241, 222, 201, 0.3);
+        }
+
+        .shelter-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .shelter-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #F1DEC9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8D7B68;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .shelter-details h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 0.25rem;
+        }
+
+        .shelter-details p {
+            font-size: 0.75rem;
+            color: #777777;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-pending {
+            background-color: #FFF8EA;
+            color: #8D7B68;
+            border: 1px solid #F1DEC9;
+        }
+
+        .status-approved {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .status-rejected {
+            background-color: #777777;
+            color: #FFFFFF;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .animals-count {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-weight: 600;
+            color: #8D7B68;
+        }
+
+        .contact-info {
+            font-size: 0.75rem;
+            color: #666666;
+        }
+
+        .contact-info a {
+            color: #8D7B68;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .pagination-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            list-style: none;
+        }
+
+        .page-item {
+            display: flex;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            padding: 0.5rem 0.75rem;
+            min-width: 40px;
+            min-height: 40px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #3C2A21;
+            text-decoration: none;
+            background-color: #FFFFFF;
+            border: 1px solid #F1DEC9;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .page-link:hover {
+            background-color: #FFF8EA;
+            border-color: #8D7B68;
+        }
+
+        .page-item.active .page-link {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            border-color: #8D7B68;
+        }
+
+        .page-item.disabled .page-link {
+            color: #777777;
+            background-color: #F9F9F9;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-actions {
+                flex-direction: column;
+            }
+
+            .table-container {
+                font-size: 0.8125rem;
+            }
+
+            .shelters-table th,
+            .shelters-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .actions-cell {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="main-container">
+        <!-- 페이지 헤더 -->
+        <header class="page-header">
+            <div class="page-title-section">
+                <h1 class="page-title">보호소 관리</h1>
+                <p class="page-subtitle">등록된 보호소를 관리하고 승인 처리를 진행할 수 있습니다</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-number">156</span>
+                    <span class="stat-label">전체 보호소</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">12</span>
+                    <span class="stat-label">승인 대기</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">8</span>
+                    <span class="stat-label">검토 필요</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 필터 섹션 -->
+        <section class="filters-section">
+            <h2 class="filters-title">검색 및 필터</h2>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label class="filter-label">승인 상태</label>
+                    <select class="filter-select">
+                        <option value="">전체</option>
+                        <option value="pending">승인 대기</option>
+                        <option value="approved">승인 완료</option>
+                        <option value="rejected">승인 거부</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">지역</label>
+                    <select class="filter-select">
+                        <option value="">전체 지역</option>
+                        <option value="seoul">서울특별시</option>
+                        <option value="busan">부산광역시</option>
+                        <option value="gyeonggi">경기도</option>
+                        <option value="incheon">인천광역시</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">보호소 종류</label>
+                    <select class="filter-select">
+                        <option value="">전체</option>
+                        <option value="public">공공 보호소</option>
+                        <option value="private">민간 보호소</option>
+                        <option value="volunteer">봉사단체</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">보호소명 검색</label>
+                    <input type="text" class="filter-input" placeholder="보호소명을 입력하세요">
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary">검색</button>
+                <button class="btn btn-secondary">초기화</button>
+            </div>
+        </section>
+
+        <!-- 보호소 목록 -->
+        <section class="content-section">
+            <div class="table-header">
+                <h2 class="table-title">보호소 목록</h2>
+                <div class="results-count">총 156개의 보호소</div>
+            </div>
+
+            <div class="table-container">
+                <table class="shelters-table">
+                    <thead>
+                        <tr>
+                            <th>보호소 정보</th>
+                            <th>위치</th>
+                            <th>연락처</th>
+                            <th>보호 동물</th>
+                            <th>등록일</th>
+                            <th>상태</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shelter-info">
+                                    <div class="shelter-avatar">🏠</div>
+                                    <div class="shelter-details">
+                                        <h3>해피독 보호소</h3>
+                                        <p>대형견 전문 보호소</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>서울 강남구 대치동</td>
+                            <td>
+                                <div class="contact-info">
+                                    <div>02-1234-5678</div>
+                                    <div><a href="mailto:info@happydog.com">info@happydog.com</a></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="animals-count">
+                                    <span>32마리</span>
+                                </div>
+                            </td>
+                            <td>2024.01.15</td>
+                            <td>
+                                <span class="status-badge status-approved">승인 완료</span>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                    <button class="btn btn-secondary">편집</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shelter-info">
+                                    <div class="shelter-avatar">🏠</div>
+                                    <div class="shelter-details">
+                                        <h3>사랑의집 보호소</h3>
+                                        <p>다견종 종합 보호소</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>경기 성남시 분당구</td>
+                            <td>
+                                <div class="contact-info">
+                                    <div>031-2345-6789</div>
+                                    <div><a href="mailto:care@lovelyhouse.org">care@lovelyhouse.org</a></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="animals-count">
+                                    <span>28마리</span>
+                                </div>
+                            </td>
+                            <td>2024.02.28</td>
+                            <td>
+                                <span class="status-badge status-pending">승인 대기</span>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-success">승인</button>
+                                    <button class="btn btn-danger">거부</button>
+                                    <button class="btn btn-info">상세</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shelter-info">
+                                    <div class="shelter-avatar">🏠</div>
+                                    <div class="shelter-details">
+                                        <h3>골든프렌즈 센터</h3>
+                                        <p>골든리트리버 전문</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>인천 남동구 구월동</td>
+                            <td>
+                                <div class="contact-info">
+                                    <div>032-3456-7890</div>
+                                    <div><a href="mailto:golden@friends.co.kr">golden@friends.co.kr</a></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="animals-count">
+                                    <span>15마리</span>
+                                </div>
+                            </td>
+                            <td>2024.03.10</td>
+                            <td>
+                                <span class="status-badge status-approved">승인 완료</span>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                    <button class="btn btn-secondary">편집</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shelter-info">
+                                    <div class="shelter-avatar">🏠</div>
+                                    <div class="shelter-details">
+                                        <h3>행복한 꼬리</h3>
+                                        <p>유기견 재활 전문</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>서울 마포구 홍대동</td>
+                            <td>
+                                <div class="contact-info">
+                                    <div>02-4567-8901</div>
+                                    <div><a href="mailto:happy@tail.kr">happy@tail.kr</a></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="animals-count">
+                                    <span>42마리</span>
+                                </div>
+                            </td>
+                            <td>2024.01.08</td>
+                            <td>
+                                <span class="status-badge status-rejected">승인 거부</span>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                    <button class="btn btn-success">재검토</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shelter-info">
+                                    <div class="shelter-avatar">🏠</div>
+                                    <div class="shelter-details">
+                                        <h3>따뜻한 보금자리</h3>
+                                        <p>소규모 가정형 보호소</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>서울 서초구 반포동</td>
+                            <td>
+                                <div class="contact-info">
+                                    <div>02-5678-9012</div>
+                                    <div><a href="mailto:warm@home.net">warm@home.net</a></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="animals-count">
+                                    <span>18마리</span>
+                                </div>
+                            </td>
+                            <td>2024.03.05</td>
+                            <td>
+                                <span class="status-badge status-pending">승인 대기</span>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-success">승인</button>
+                                    <button class="btn btn-danger">거부</button>
+                                    <button class="btn btn-info">상세</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shelter-info">
+                                    <div class="shelter-avatar">🏠</div>
+                                    <div class="shelter-details">
+                                        <h3>푸른 언덕 보호소</h3>
+                                        <p>자연 친화적 보호소</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>경기 용인시 기흥구</td>
+                            <td>
+                                <div class="contact-info">
+                                    <div>031-6789-0123</div>
+                                    <div><a href="mailto:green@hill.org">green@hill.org</a></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="animals-count">
+                                    <span>25마리</span>
+                                </div>
+                            </td>
+                            <td>2024.02.20</td>
+                            <td>
+                                <span class="status-badge status-approved">승인 완료</span>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="btn btn-info">상세</button>
+                                    <button class="btn btn-secondary">편집</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 페이지네이션 -->
+            <nav class="pagination-nav">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a href="#" class="page-link">이전</a>
+                    </li>
+                    <li class="page-item active">
+                        <a href="#" class="page-link">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">다음</a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>

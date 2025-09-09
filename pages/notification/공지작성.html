@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 작성 - 강아지 보호소 커뮤니티</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easymde/2.18.0/easymde.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F9F9F9;
+            color: #3C2A21;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .breadcrumb-item {
+            color: #777777;
+        }
+
+        .breadcrumb-item a {
+            color: #8D7B68;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-item a:hover {
+            color: #3C2A21;
+        }
+
+        .breadcrumb-separator {
+            color: #A4907C;
+            font-size: 12px;
+        }
+
+        .page-header {
+            background-color: #FFFFFF;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(60, 42, 33, 0.08);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #3C2A21;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: #777777;
+        }
+
+        .form-container {
+            background-color: #FFFFFF;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(60, 42, 33, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #F1DEC9;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 8px;
+        }
+
+        .required::after {
+            content: "*";
+            color: #8D7B68;
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #F1DEC9;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #FFF8EA;
+            color: #3C2A21;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #8D7B68;
+            background-color: #FFFFFF;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+            line-height: 1.6;
+        }
+
+        .form-description {
+            font-size: 13px;
+            color: #777777;
+            margin-top: 6px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* EasyMDE 커스텀 스타일 */
+        .EasyMDEContainer {
+            border: 2px solid #F1DEC9 !important;
+            border-radius: 8px !important;
+            background-color: #FFF8EA !important;
+        }
+
+        .EasyMDEContainer .editor-toolbar {
+            background-color: #F1DEC9 !important;
+            border-bottom: 1px solid #A4907C !important;
+            border-top: none !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-radius: 8px 8px 0 0 !important;
+        }
+
+        .EasyMDEContainer .editor-toolbar button {
+            background-color: #FFFFFF !important;
+            border: 1px solid #A4907C !important;
+            border-radius: 4px !important;
+            color: #666666 !important;
+            margin: 2px !important;
+            transition: all 0.2s !important;
+        }
+
+        .EasyMDEContainer .editor-toolbar button:hover,
+        .EasyMDEContainer .editor-toolbar button.active {
+            background-color: #8D7B68 !important;
+            color: #FFFFFF !important;
+            border-color: #8D7B68 !important;
+        }
+
+        .EasyMDEContainer .editor-toolbar i.separator {
+            border-left: 1px solid #A4907C !important;
+            margin: 0 6px !important;
+        }
+
+        .EasyMDEContainer .CodeMirror {
+            background-color: #FFFFFF !important;
+            color: #3C2A21 !important;
+            border: none !important;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+            min-height: 400px !important;
+        }
+
+        .EasyMDEContainer .CodeMirror-focused {
+            outline: none !important;
+        }
+
+        .EasyMDEContainer .editor-preview {
+            background-color: #FFFFFF !important;
+            color: #3C2A21 !important;
+            padding: 16px !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+        }
+
+        .EasyMDEContainer .editor-preview h1,
+        .EasyMDEContainer .editor-preview h2,
+        .EasyMDEContainer .editor-preview h3,
+        .EasyMDEContainer .editor-preview h4,
+        .EasyMDEContainer .editor-preview h5,
+        .EasyMDEContainer .editor-preview h6 {
+            color: #3C2A21 !important;
+            font-weight: 600 !important;
+            margin: 20px 0 10px 0 !important;
+        }
+
+        .EasyMDEContainer .editor-preview h1 {
+            font-size: 24px !important;
+            border-bottom: 2px solid #F1DEC9 !important;
+            padding-bottom: 8px !important;
+        }
+
+        .EasyMDEContainer .editor-preview h2 {
+            font-size: 20px !important;
+            border-bottom: 1px solid #F1DEC9 !important;
+            padding-bottom: 4px !important;
+        }
+
+        .EasyMDEContainer .editor-preview blockquote {
+            border-left: 4px solid #8D7B68 !important;
+            background-color: #FFF8EA !important;
+            margin: 15px 0 !important;
+            padding: 15px 20px !important;
+            border-radius: 4px !important;
+        }
+
+        .EasyMDEContainer .editor-preview code {
+            background-color: #F1DEC9 !important;
+            color: #3C2A21 !important;
+            padding: 2px 6px !important;
+            border-radius: 3px !important;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+        }
+
+        .EasyMDEContainer .editor-preview pre {
+            background-color: #F1DEC9 !important;
+            border: 1px solid #A4907C !important;
+            border-radius: 4px !important;
+            padding: 15px !important;
+            overflow-x: auto !important;
+        }
+
+        .EasyMDEContainer .editor-preview pre code {
+            background-color: transparent !important;
+            padding: 0 !important;
+        }
+
+        .EasyMDEContainer .editor-preview ul,
+        .EasyMDEContainer .editor-preview ol {
+            margin: 10px 0 !important;
+            padding-left: 30px !important;
+        }
+
+        .EasyMDEContainer .editor-preview li {
+            margin: 5px 0 !important;
+        }
+
+        .EasyMDEContainer .editor-preview table {
+            border-collapse: collapse !important;
+            width: 100% !important;
+            margin: 15px 0 !important;
+        }
+
+        .EasyMDEContainer .editor-preview table th,
+        .EasyMDEContainer .editor-preview table td {
+            border: 1px solid #F1DEC9 !important;
+            padding: 8px 12px !important;
+            text-align: left !important;
+        }
+
+        .EasyMDEContainer .editor-preview table th {
+            background-color: #FFF8EA !important;
+            font-weight: 600 !important;
+        }
+
+        .EasyMDEContainer .editor-statusbar {
+            background-color: #F1DEC9 !important;
+            color: #666666 !important;
+            border-top: 1px solid #A4907C !important;
+            padding: 8px 10px !important;
+            border-radius: 0 0 8px 8px !important;
+        }
+
+        .attachment-area {
+            border: 2px dashed #F1DEC9;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            background-color: #FFF8EA;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .attachment-area:hover,
+        .attachment-area.dragover {
+            border-color: #8D7B68;
+            background-color: rgba(141, 123, 104, 0.1);
+        }
+
+        .attachment-icon {
+            font-size: 32px;
+            color: #A4907C;
+            margin-bottom: 10px;
+        }
+
+        .attachment-text {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 8px;
+        }
+
+        .attachment-hint {
+            font-size: 12px;
+            color: #777777;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-list {
+            margin-top: 15px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #FFFFFF;
+            border: 1px solid #F1DEC9;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-name {
+            font-size: 14px;
+            color: #3C2A21;
+            font-weight: 500;
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: #777777;
+        }
+
+        .file-remove {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .file-remove:hover {
+            background-color: #666666;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .checkbox-input {
+            transform: scale(1.2);
+            accent-color: #8D7B68;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: #666666;
+            cursor: pointer;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding-top: 30px;
+            border-top: 1px solid #F1DEC9;
+        }
+
+        .action-left {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-right {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #A4907C;
+        }
+
+        .btn-secondary {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+
+        .btn-secondary:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #666666;
+            border: 1px solid #F1DEC9;
+        }
+
+        .btn-outline:hover {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+
+        .preview-container {
+            background-color: #FFFFFF;
+            border: 2px solid #F1DEC9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .preview-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #8D7B68;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #F1DEC9;
+        }
+
+        .preview-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #3C2A21;
+            min-height: 100px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background-color: #A4907C;
+        }
+
+        .toast.error {
+            background-color: #666666;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 20px 15px;
+            }
+
+            .page-header,
+            .form-container {
+                padding: 25px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .action-left,
+            .action-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* EasyMDE 모바일 최적화 */
+            .EasyMDEContainer .editor-toolbar {
+                flex-wrap: wrap !important;
+                padding: 8px !important;
+            }
+
+            .EasyMDEContainer .editor-toolbar button {
+                margin: 1px !important;
+                padding: 4px 6px !important;
+                font-size: 11px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <nav class="breadcrumb">
+            <div class="breadcrumb-list">
+                <div class="breadcrumb-item">
+                    <a href="#">홈</a>
+                </div>
+                <div class="breadcrumb-separator">›</div>
+                <div class="breadcrumb-item">
+                    <a href="#">공지사항</a>
+                </div>
+                <div class="breadcrumb-separator">›</div>
+                <div class="breadcrumb-item">공지사항 작성</div>
+            </div>
+        </nav>
+
+        <div class="page-header">
+            <h1 class="page-title">공지사항 작성</h1>
+            <p class="page-subtitle">강아지 보호소 커뮤니티 공지사항을 작성합니다</p>
+        </div>
+
+        <form class="form-container" id="notice-form">
+            <div class="form-section">
+                <h2 class="section-title">기본 정보</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category" class="form-label required">카테고리</label>
+                        <select id="category" class="form-select">
+                            <option value="">카테고리를 선택하세요</option>
+                            <option value="important">중요 공지</option>
+                            <option value="general">일반 안내</option>
+                            <option value="update">업데이트</option>
+                            <option value="event">이벤트</option>
+                            <option value="maintenance">점검</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="priority" class="form-label">우선순위</label>
+                        <select id="priority" class="form-select">
+                            <option value="normal">일반</option>
+                            <option value="high">높음</option>
+                            <option value="urgent">긴급</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="title" class="form-label required">제목</label>
+                    <input type="text" id="title" class="form-input" placeholder="공지사항 제목을 입력하세요">
+                    <div class="form-description">명확하고 간결한 제목을 작성해주세요.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="summary" class="form-label">요약</label>
+                    <textarea id="summary" class="form-textarea" placeholder="공지사항의 간단한 요약을 입력하세요 (선택사항)"></textarea>
+                    <div class="form-description">목록에서 미리보기로 표시될 내용입니다.</div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title">내용 작성</h2>
+                
+                <div class="form-group">
+                    <label class="form-label required">본문</label>
+                    <textarea id="content-editor" placeholder="마크다운 문법을 사용하여 공지사항 내용을 작성하세요..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title">첨부 파일</h2>
+                
+                <div class="form-group">
+                    <label class="form-label">파일 첨부</label>
+                    <div class="attachment-area" id="attachment-area">
+                        <div class="attachment-icon">📎</div>
+                        <div class="attachment-text">파일을 여기에 드래그하거나 클릭하여 선택하세요</div>
+                        <div class="attachment-hint">최대 10MB, jpg, png, pdf, doc 파일 지원</div>
+                        <input type="file" class="file-input" id="file-input" multiple accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+                    </div>
+                    <div class="file-list" id="file-list"></div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2 class="section-title">발행 설정</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="publish-date" class="form-label">발행일시</label>
+                        <input type="datetime-local" id="publish-date" class="form-input">
+                        <div class="form-description">지정하지 않으면 즉시 발행됩니다.</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expire-date" class="form-label">만료일시</label>
+                        <input type="datetime-local" id="expire-date" class="form-input">
+                        <div class="form-description">만료일 이후 자동으로 목록에서 제외됩니다.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="send-notification" class="checkbox-input">
+                        <label for="send-notification" class="checkbox-label">회원들에게 알림 발송</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="pin-top" class="checkbox-input">
+                        <label for="pin-top" class="checkbox-label">상단 고정</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="comment-allow" class="checkbox-input" checked>
+                        <label for="comment-allow" class="checkbox-label">댓글 허용</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <div class="action-left">
+                    <button type="button" class="btn btn-outline" id="preview-btn">미리보기</button>
+                    <button type="button" class="btn btn-outline" id="draft-save-btn">임시저장</button>
+                </div>
+                <div class="action-right">
+                    <a href="#" class="btn btn-secondary">취소</a>
+                    <button type="submit" class="btn btn-primary">발행</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="preview-container" id="preview-container">
+            <div class="preview-title">📄 미리보기</div>
+            <div class="preview-content" id="preview-content">
+                미리보기 내용이 여기에 표시됩니다...
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/easymde/2.18.0/easymde.min.js"></script>
+    <script>
+        // 전역 변수
+        let easyMDE;
+        let selectedFiles = [];
+
+        // EasyMDE 초기화
+        function initializeEditor() {
+            easyMDE = new EasyMDE({
+                element: document.getElementById('content-editor'),
+                spellChecker: false,
+                placeholder: '마크다운 문법을 사용하여 공지사항 내용을 작성하세요...',
+                toolbar: [
+                    'bold', 'italic', 'strikethrough', '|',
+                    'heading-1', 'heading-2', 'heading-3', '|',
+                    'unordered-list', 'ordered-list', 'quote', '|',
+                    'link', 'image', 'code', 'table', '|',
+                    'preview', 'side-by-side', 'fullscreen', '|',
+                    'guide'
+                ],
+                status: ['autosave', 'lines', 'words', 'cursor'],
+                autosave: {
+                    enabled: true,
+                    uniqueId: 'notice-content',
+                    delay: 10000,
+                },
+                previewRender: function(plainText) {
+                    return this.parent.markdown(plainText);
+                },
+                renderingConfig: {
+                    singleLineBreaks: false,
+                    codeSyntaxHighlighting: true,
+                }
+            });
+        }
+
+        // Toast 알림 표시
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        // 파일 크기 포맷팅
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 파일 목록 업데이트
+        function updateFileList() {
+            const fileList = document.getElementById('file-list');
+            fileList.innerHTML = '';
+            
+            selectedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-size">${formatFileSize(file.size)}</span>
+                    </div>
+                    <button type="button" class="file-remove" onclick="removeFile(${index})">삭제</button>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        }
+
+        // 파일 제거
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateFileList();
+        }
+
+        // 파일 처리
+        function handleFiles(files) {
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            const allowedTypes = ['.jpg', '.jpeg', '.png', '.pdf', '.doc', '.docx'];
+            
+            Array.from(files).forEach(file => {
+                // 파일 크기 체크
+                if (file.size > maxSize) {
+                    showToast(`${file.name} 파일이 너무 큽니다. (최대 10MB)`, 'error');
+                    return;
+                }
+                
+                // 파일 형식 체크
+                const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+                if (!allowedTypes.includes(fileExtension)) {
+                    showToast(`${file.name} 파일 형식이 지원되지 않습니다.`, 'error');
+                    return;
+                }
+                
+                // 중복 파일 체크
+                if (selectedFiles.some(existingFile => existingFile.name === file.name)) {
+                    showToast(`${file.name} 파일이 이미 추가되었습니다.`, 'error');
+                    return;
+                }
+                
+                selectedFiles.push(file);
+            });
+            
+            updateFileList();
+        }
+
+        // 폼 데이터 수집
+        function getFormData() {
+            return {
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                priority: document.getElementById('priority').value,
+                summary: document.getElementById('summary').value,
+                content: easyMDE.value(),
+                publishDate: document.getElementById('publish-date').value,
+                expireDate: document.getElementById('expire-date').value,
+                sendNotification: document.getElementById('send-notification').checked,
+                pinTop: document.getElementById('pin-top').checked,
+                commentAllow: document.getElementById('comment-allow').checked,
+                files: selectedFiles.map(file => ({ name: file.name, size: file.size }))
+            };
+        }
+
+        // 폼 데이터 설정
+        function setFormData(data) {
+            document.getElementById('title').value = data.title || '';
+            document.getElementById('category').value = data.category || '';
+            document.getElementById('priority').value = data.priority || 'normal';
+            document.getElementById('summary').value = data.summary || '';
+            easyMDE.value(data.content || '');
+            document.getElementById('publish-date').value = data.publishDate || '';
+            document.getElementById('expire-date').value = data.expireDate || '';
+            document.getElementById('send-notification').checked = data.sendNotification || false;
+            document.getElementById('pin-top').checked = data.pinTop || false;
+            document.getElementById('comment-allow').checked = data.commentAllow !== undefined ? data.commentAllow : true;
+        }
+
+        // 임시저장
+        function saveDraft() {
+            const formData = getFormData();
+            localStorage.setItem('notice-draft', JSON.stringify(formData));
+            showToast('임시저장이 완료되었습니다.');
+        }
+
+        // 임시저장 불러오기
+        function loadDraft() {
+            const savedDraft = localStorage.getItem('notice-draft');
+            if (savedDraft) {
+                const formData = JSON.parse(savedDraft);
+                if (confirm('임시저장된 내용이 있습니다. 불러오시겠습니까?')) {
+                    setFormData(formData);
+                    showToast('임시저장된 내용을 불러왔습니다.');
+                }
+            }
+        }
+
+        // 폼 유효성 검사
+        function validateForm() {
+            const title = document.getElementById('title').value.trim();
+            const category = document.getElementById('category').value;
+            const content = easyMDE.value().trim();
+            
+            if (!title) {
+                showToast('제목을 입력해주세요.', 'error');
+                document.getElementById('title').focus();
+                return false;
+            }
+            
+            if (!category) {
+                showToast('카테고리를 선택해주세요.', 'error');
+                document.getElementById('category').focus();
+                return false;
+            }
+            
+            if (!content) {
+                showToast('본문 내용을 입력해주세요.', 'error');
+                easyMDE.codemirror.focus();
+                return false;
+            }
+            
+            return true;
+        }
+
+        // 이벤트 리스너 등록
+        function bindEvents() {
+            // 파일 첨부 영역 클릭
+            document.getElementById('attachment-area').addEventListener('click', function() {
+                document.getElementById('file-input').click();
+            });
+
+            // 파일 선택
+            document.getElementById('file-input').addEventListener('change', function() {
+                handleFiles(this.files);
+            });
+
+            // 드래그 앤 드롭
+            const attachmentArea = document.getElementById('attachment-area');
+            
+            attachmentArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+
+            attachmentArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+
+            attachmentArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                handleFiles(e.dataTransfer.files);
+            });
+
+            // 미리보기 버튼
+            document.getElementById('preview-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const previewContainer = document.getElementById('preview-container');
+                const previewContent = document.getElementById('preview-content');
+                
+                if (previewContainer.style.display === 'none' || !previewContainer.style.display) {
+                    const markdownContent = easyMDE.value();
+                    if (markdownContent.trim()) {
+                        previewContent.innerHTML = easyMDE.options.previewRender(markdownContent);
+                    } else {
+                        previewContent.innerHTML = '<p style="color: #777777;">내용을 입력해주세요.</p>';
+                    }
+                    previewContainer.style.display = 'block';
+                    this.textContent = '미리보기 닫기';
+                    previewContainer.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    previewContainer.style.display = 'none';
+                    this.textContent = '미리보기';
+                }
+            });
+
+            // 임시저장 버튼
+            document.getElementById('draft-save-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                saveDraft();
+            });
+
+            // 폼 제출
+            document.getElementById('notice-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!validateForm()) {
+                    return;
+                }
+                
+                if (confirm('공지사항을 발행하시겠습니까?')) {
+                    // 여기에 실제 제출 로직 구현
+                    const formData = getFormData();
+                    console.log('제출 데이터:', formData);
+                    
+                    showToast('공지사항이 성공적으로 발행되었습니다.');
+                    
+                    // 임시저장 데이터 삭제
+                    localStorage.removeItem('notice-draft');
+                    
+                    // 실제로는 서버로 데이터 전송 후 목록 페이지로 이동
+                    // window.location.href = '/notices';
+                }
+            });
+        }
+
+        // 페이지 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEditor();
+            bindEvents();
+            
+            // 페이지 로드 시 임시저장 확인
+            setTimeout(loadDraft, 1000);
+        });
+
+        // 페이지 이탈 시 확인
+        window.addEventListener('beforeunload', function(e) {
+            const formData = getFormData();
+            const hasContent = formData.title || formData.content || formData.summary;
+            
+            if (hasContent) {
+                const confirmationMessage = '작성 중인 내용이 있습니다. 페이지를 떠나시겠습니까?';
+                e.returnValue = confirmationMessage;
+                return confirmationMessage;
+            }
+        });
+    </script>
+</body>
+</html>

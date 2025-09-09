@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초코 - 강아지 프로필</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        
+        body {
+            background-color: #F9F9F9;
+            color: #000000;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #3C2A21;
+            font-weight: 600;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #8D7B68;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            color: #A4907C;
+        }
+        
+        .profile-card {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .profile-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .dog-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #F1DEC9;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .dog-name {
+            font-size: 32px;
+            color: #3C2A21;
+            margin-bottom: 12px;
+        }
+        
+        .dog-details {
+            color: #666666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .detail-item {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        
+        .detail-label {
+            width: 100px;
+            color: #777777;
+        }
+        
+        .detail-value {
+            flex: 1;
+            color: #000000;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        
+        .status-available {
+            background-color: rgba(141, 123, 104, 0.2);
+            color: #8D7B68;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-adopt {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+        
+        .btn-adopt:hover {
+            background-color: #A4907C;
+        }
+        
+        .btn-sponsor {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+        
+        .btn-sponsor:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            color: #3C2A21;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #F1DEC9;
+        }
+        
+        .description {
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .shelter-info {
+            background-color: #FFF8EA;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+        
+        .shelter-name {
+            font-size: 18px;
+            color: #3C2A21;
+            margin-bottom: 12px;
+        }
+        
+        .shelter-contact {
+            color: #666666;
+            margin-bottom: 8px;
+        }
+        
+        .shelter-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #8D7B68;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .shelter-link:hover {
+            color: #A4907C;
+        }
+        
+        .blog-section {
+            margin-top: 30px;
+        }
+        
+        .blog-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: #F1DEC9;
+            color: #3C2A21;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .blog-link:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+        
+        .gallery-item {
+            height: 150px;
+            border-radius: 6px;
+            background-color: #F1DEC9;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="#" class="back-link">← 뒤로 가기</a>
+        <h1 class="page-title">강아지 프로필</h1>
+        
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="dog-image"></div>
+                <div class="profile-info">
+                    <h2 class="dog-name">초코</h2>
+                    <div class="dog-details">
+                        <div class="detail-item">
+                            <span class="detail-label">품종</span>
+                            <span class="detail-value">말티즈</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">성별</span>
+                            <span class="detail-value">암컷</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">나이</span>
+                            <span class="detail-value">2세</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">체중</span>
+                            <span class="detail-value">3.2kg</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">성격</span>
+                            <span class="detail-value">온순함, 사랑스러움, 장난감 좋아함</span>
+                        </div>
+                        <span class="status-badge status-available">입양 가능</span>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-adopt">입양 신청하기</button>
+                        <button class="btn btn-sponsor">후원하기</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">소개</h3>
+            <p class="description">
+                초코는 2022년 3월에 보호소로 들어온 사랑스러운 말티즈입니다. 
+                사람을 좋아하고 애정 표현이 많은 친구에요. 산책을 좋아하고 다른 강아지들과도 잘 지내는 사회성 좋은 아이입니다.
+                간식과 장난감에 매우 관심이 많아요. 실내 생활에 적합하며 배변 교육도 잘 되어 있습니다.
+            </p>
+            
+            <h3 class="section-title">건강 상태</h3>
+            <p class="description">
+                모든 예방접종 완료, 중성화 수술 완료, 기생충 치료 완료. 
+                특별히 관리해야 할 건강 문제는 없으며 정기적인 건강 검진을 받고 있습니다.
+            </p>
+            
+            <div class="shelter-info">
+                <h3 class="section-title">보호소 정보</h3>
+                <h4 class="shelter-name">해피동물보호소</h4>
+                <p class="shelter-contact">📞 02-1234-5678</p>
+                <p class="shelter-contact">📍 서울시 강남구 역삼동 123-45</p>
+                <p class="shelter-contact">🕒 운영시간: 화-일 10:00 - 18:00 (월요일 휴무)</p>
+                <a href="#" class="shelter-link">보호소 프로필 보기 →</a>
+            </div>
+            
+            <div class="blog-section">
+                <h3 class="section-title">초코의 일상</h3>
+                <p class="description">초코의 보호소 생활과 성장 과정을 블로그에서 확인해보세요.</p>
+                <a href="#" class="blog-link">초코의 일상 블로그 보기 →</a>
+            </div>
+            
+            <h3 class="section-title">갤러리</h3>
+            <div class="gallery">
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

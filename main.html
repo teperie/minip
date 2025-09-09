@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동반자 - 유기견 보호소 통합 플랫폼</title>
+    <meta name="description" content="유기동물 보호, 입양 연결, 후원 관리를 통한 동물 복지 향상 플랫폼">
+    
+    <!-- CSS 파일들 -->
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- <link rel="stylesheet" href="styles/responsive.css"> -->
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 아이콘 (Feather Icons 사용) -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header" class="header">
+        <div class="container">
+            <!-- Top Bar -->
+            <div class="header-top">
+                <!-- Logo and Title -->
+                <div class="header-logo">
+                    <div class="logo-icon">
+                        <i data-feather="heart"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>동반자</h1>
+                        <p>유기견 보호소 통합 플랫폼</p>
+                    </div>
+                </div>
+
+                <!-- Spacer -->
+                <div class="header-spacer"></div>
+
+                <!-- Search and Auth -->
+                <div class="header-actions">
+                    <!-- Search -->
+                    <div class="search-container">
+                        <input type="search" placeholder="통합검색..." class="search-input">
+                        <i data-feather="search" class="search-icon"></i>
+                    </div>
+
+                    <!-- Auth Buttons -->
+                    <div class="auth-buttons">
+                        <button class="btn btn-outline">
+                            <i data-feather="log-in"></i>
+                            로그인
+                        </button>
+                        <button class="btn btn-primary">
+                            <i data-feather="user"></i>
+                            회원가입
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="header-nav">
+                <!-- Desktop Navigation -->
+                <div class="nav-desktop">
+                    <a href="#" class="nav-link">커뮤니티</a>
+                    <a href="#" class="nav-link">최근구조</a>
+                    <a href="#" class="nav-link">실종신고</a>
+                    <a href="#" class="nav-link">입양하기</a>
+                    <a href="#" class="nav-link">후원하기</a>
+                    <a href="#" class="nav-link">봉사하기</a>
+                    <a href="#" class="nav-link">공지사항</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="nav-mobile">
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Overlay -->
+                <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+                    <div class="mobile-menu">
+                        <a href="#" class="mobile-nav-link">커뮤니티</a>
+                        <a href="#" class="mobile-nav-link">최근구조</a>
+                        <a href="#" class="mobile-nav-link">실종신고</a>
+                        <a href="#" class="mobile-nav-link">입양하기</a>
+                        <a href="#" class="mobile-nav-link">후원하기</a>
+                        <a href="#" class="mobile-nav-link">봉사하기</a>
+                        <a href="#" class="mobile-nav-link">공지사항</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <!-- Background Image with Overlay -->
+            <div class="hero-background">
+                <img src="https://images.unsplash.com/photo-1627014450098-8e7ed1084606?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGZhbWlseSUyMHdpdGglMjByZXNjdWUlMjBkb2clMjBhZG9wdGlvbnxlbnwxfHx8fDE3NTY4Nzk3MTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" alt="Happy family with rescue dog" class="hero-bg-image">
+                <div class="hero-overlay"></div>
+                <div class="hero-gradient"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="container hero-content">
+                <div class="hero-text-content">
+                    <!-- Main Slogan -->
+                    <div class="hero-slogan">
+                        <h1 class="hero-title">
+                            지금, <span class="highlight">동반자</span>와 함께 해주세요.
+                        </h1>
+                        <p class="hero-subtitle">
+                            당신의 참여가 더 많은 생명을 구합니다.
+                        </p>
+                    </div>
+
+                    <!-- Browse Button -->
+                    <div class="hero-actions">
+                        <button class="btn btn-large btn-white">
+                            <i data-feather="eye"></i>
+                            내 주변 보호소 찾기
+                            <i data-feather="arrow-right"></i>
+                        </button>
+
+                        <!-- Action Buttons Grid -->
+                        <div class="hero-action-grid">
+                            <button class="action-btn action-btn-primary">
+                                <i data-feather="heart"></i>
+                                <span>최근구조</span>
+                            </button>
+                            
+                            <button class="action-btn action-btn-outline">
+                                <i data-feather="search"></i>
+                                <span>실종신고</span>
+                            </button>
+                            
+                            <button class="action-btn action-btn-outline">
+                                <i data-feather="home"></i>
+                                <span>입양하기</span>
+                            </button>
+                            
+                            <button class="action-btn action-btn-outline">
+                                <i data-feather="dollar-sign"></i>
+                                <span>후원하기</span>
+                            </button>
+                            
+                            <button class="action-btn action-btn-outline">
+                                <i data-feather="users"></i>
+                                <span>봉사하기</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Gradient -->
+            <div class="hero-bottom-gradient"></div>
+        </section>
+
+        <!-- Recently Rescued Animals -->
+        <section id="rescued-animals" class="animal-carousel-section rescued">
+            <div class="carousel-background-pattern"></div>
+            <div class="container carousel-container">
+                <!-- Header -->
+                <div class="carousel-header">
+                    <div class="carousel-title-group">
+                        <div class="carousel-title-row">
+                            <h2 class="carousel-title">최근 구조된 아이들</h2>
+                            <div class="carousel-stats">
+                                <span class="stat-badge stat-primary">현재 20마리</span>
+                                <span class="stat-badge stat-green">지금까지 1,247마리 구조</span>
+                                <button class="btn btn-outline btn-more">
+                                    <i data-feather="plus"></i>
+                                    더보기
+                                </button>
+                            </div>
+                        </div>
+                        <p class="carousel-subtitle">길에서 구조되어 보호받고 있는 아이들입니다</p>
+                    </div>
+                </div>
+
+                <!-- Carousel Container -->
+                <div class="carousel-wrapper">
+                    <!-- Navigation Arrows -->
+                    <button class="carousel-nav carousel-nav-prev" id="rescued-prev" disabled>
+                        <i data-feather="chevron-left"></i>
+                    </button>
+                    <button class="carousel-nav carousel-nav-next" id="rescued-next">
+                        <i data-feather="chevron-right"></i>
+                    </button>
+
+                    <!-- Carousel Content -->
+                    <div class="carousel-content">
+                        <div class="carousel-track" id="rescued-track">
+                            <!-- Animal cards will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dots Indicator -->
+                <div class="carousel-dots" id="rescued-dots">
+                    <!-- Dots will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Adoptable Animals -->
+        <section id="adoptable-animals" class="animal-carousel-section adoptable">
+            <div class="carousel-background-pattern"></div>
+            <div class="container carousel-container">
+                <!-- Header -->
+                <div class="carousel-header">
+                    <div class="carousel-title-group">
+                        <div class="carousel-title-row">
+                            <h2 class="carousel-title">입양을 기다리는 아이들</h2>
+                            <div class="carousel-stats">
+                                <span class="stat-badge stat-primary">현재 20마리</span>
+                                <span class="stat-badge stat-blue">지금까지 3,892마리 입양</span>
+                                <button class="btn btn-outline btn-more">
+                                    <i data-feather="plus"></i>
+                                    더보기
+                                </button>
+                            </div>
+                        </div>
+                        <p class="carousel-subtitle">따뜻한 가족을 기다리고 있어요</p>
+                    </div>
+                </div>
+
+                <!-- Carousel Container -->
+                <div class="carousel-wrapper">
+                    <!-- Navigation Arrows -->
+                    <button class="carousel-nav carousel-nav-prev" id="adoptable-prev" disabled>
+                        <i data-feather="chevron-left"></i>
+                    </button>
+                    <button class="carousel-nav carousel-nav-next" id="adoptable-next">
+                        <i data-feather="chevron-right"></i>
+                    </button>
+
+                    <!-- Carousel Content -->
+                    <div class="carousel-content">
+                        <div class="carousel-track" id="adoptable-track">
+                            <!-- Animal cards will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dots Indicator -->
+                <div class="carousel-dots" id="adoptable-dots">
+                    <!-- Dots will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Missing Animals -->
+        <section id="missing-animals" class="animal-carousel-section missing">
+            <div class="carousel-background-pattern"></div>
+            <div class="container carousel-container">
+                <!-- Header -->
+                <div class="carousel-header">
+                    <div class="carousel-title-group">
+                        <div class="carousel-title-row">
+                            <h2 class="carousel-title">실종된 아이들</h2>
+                            <div class="carousel-stats">
+                                <span class="stat-badge stat-primary">현재 20마리</span>
+                                <span class="stat-badge stat-orange">지금까지 567마리 찾음</span>
+                                <button class="btn btn-outline btn-more">
+                                    <i data-feather="plus"></i>
+                                    더보기
+                                </button>
+                            </div>
+                        </div>
+                        <p class="carousel-subtitle">가족을 찾고 있어요. 목격하신 분은 제보해주세요</p>
+                    </div>
+                </div>
+
+                <!-- Carousel Container -->
+                <div class="carousel-wrapper">
+                    <!-- Navigation Arrows -->
+                    <button class="carousel-nav carousel-nav-prev" id="missing-prev" disabled>
+                        <i data-feather="chevron-left"></i>
+                    </button>
+                    <button class="carousel-nav carousel-nav-next" id="missing-next">
+                        <i data-feather="chevron-right"></i>
+                    </button>
+
+                    <!-- Carousel Content -->
+                    <div class="carousel-content">
+                        <div class="carousel-track" id="missing-track">
+                            <!-- Animal cards will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dots Indicator -->
+                <div class="carousel-dots" id="missing-dots">
+                    <!-- Dots will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section id="community" class="community-section">
+            <!-- Background Pattern -->
+            <div class="community-background-pattern"></div>
+            
+            <div class="container community-container">
+                <!-- Header -->
+                <div class="community-header">
+                    <h2 class="community-title">커뮤니티</h2>
+                    <p class="community-subtitle">
+                        보호소의 일상과 반려동물 이야기들을 나누어보세요
+                    </p>
+                </div>
+
+                <!-- Posts Grid -->
+                <div class="community-posts-grid" id="community-posts">
+                    <!-- Posts will be populated by JavaScript -->
+                </div>
+
+                <!-- View More Button -->
+                <div class="community-more">
+                    <button class="btn btn-large community-more-btn">
+                        더 많은 글 보기
+                        <i data-feather="arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="footer">
+        <!-- Background Pattern -->
+        <div class="footer-background-pattern"></div>
+        
+        <div class="container footer-container">
+            <div class="footer-content">
+                <!-- Logo and Description -->
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i data-feather="heart"></i>
+                        </div>
+                        <div class="footer-logo-text">
+                            <h3>동반자</h3>
+                            <p>유기견 보호소 통합 플랫폼</p>
+                        </div>
+                    </div>
+                    
+                    <p class="footer-description">
+                        전국의 유기동물보호소를 통합하여 입양, 후원, 봉사, 커뮤니티 기능을 
+                        한곳에서 제공하는 종합 플랫폼입니다. 더 많은 생명을 구하는 일에 함께해주세요.
+                    </p>
+                    
+                    <div class="footer-contact">
+                        <div class="contact-item">
+                            <i data-feather="phone"></i>
+                            <span>1588-0000 (평일 9:00-18:00)</span>
+                        </div>
+                        <div class="contact-item">
+                            <i data-feather="mail"></i>
+                            <span>help@dongbanja.kr</span>
+                        </div>
+                        <div class="contact-item">
+                            <i data-feather="map-pin"></i>
+                            <span>서울시 강남구 테헤란로 123, 동반자빌딩</span>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="footer-social">
+                        <span>Follow us:</span>
+                        <div class="social-links">
+                            <a href="#" class="social-link" title="Instagram">
+                                <i data-feather="instagram"></i>
+                            </a>
+                            <a href="#" class="social-link" title="Facebook">
+                                <i data-feather="facebook"></i>
+                            </a>
+                            <a href="#" class="social-link" title="YouTube">
+                                <i data-feather="youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-links">
+                    <h4 class="footer-section-title">
+                        <i data-feather="award"></i>
+                        빠른 메뉴
+                    </h4>
+                    <ul class="footer-menu">
+                        <li><a href="#" class="footer-menu-item">
+                            <span>최근구조</span>
+                            <span class="menu-count">19마리</span>
+                        </a></li>
+                        <li><a href="#" class="footer-menu-item">
+                            <span>입양하기</span>
+                            <span class="menu-count">143마리</span>
+                        </a></li>
+                        <li><a href="#" class="footer-menu-item">
+                            <span>실종신고</span>
+                            <span class="menu-count">78마리</span>
+                        </a></li>
+                        <li><a href="#" class="footer-menu-item">
+                            <span>후원하기</span>
+                            <span class="menu-count">₩2.1억</span>
+                        </a></li>
+                        <li><a href="#" class="footer-menu-item">
+                            <span>봉사하기</span>
+                            <span class="menu-count">1,240명</span>
+                        </a></li>
+                        <li><a href="#" class="footer-menu-item">
+                            <span>커뮤니티</span>
+                            <span class="menu-count">2.8K글</span>
+                        </a></li>
+                        <li><a href="#" class="footer-menu-item">
+                            <span>공지사항</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Support Info -->
+                <div class="footer-support">
+                    <h4 class="footer-section-title">지원 정보</h4>
+                    <ul class="footer-menu">
+                        <li><a href="#" class="footer-menu-item">이용약관</a></li>
+                        <li><a href="#" class="footer-menu-item">개인정보처리방침</a></li>
+                        <li><a href="#" class="footer-menu-item">FAQ</a></li>
+                        <li><a href="#" class="footer-menu-item">고객센터</a></li>
+                        <li><a href="#" class="footer-menu-item">파트너 등록</a></li>
+                    </ul>
+
+                    <!-- Achievement Badge -->
+                    <div class="footer-badge">
+                        <div class="badge-header">
+                            <i data-feather="award"></i>
+                            <span>통합 인증</span>
+                        </div>
+                        <p class="badge-description">
+                            농림축산식품부 · 동물보호단체 공식 인증
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2024 동반자. All rights reserved.
+                </p>
+                <div class="footer-made-with">
+                    <span>Made with</span>
+                    <i data-feather="heart" class="heart-icon"></i>
+                    <span>for all animals</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 파일들 -->
+    <script src="scripts/data.js"></script>
+    <script src="scripts/carousel.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>

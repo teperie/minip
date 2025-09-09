@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 상세 - 관리자</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #F9F9F9;
+            color: #3C2A21;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            padding: 0.75rem;
+            background-color: #F1DEC9;
+            color: #3C2A21;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3C2A21;
+        }
+
+        .status-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-success {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .btn-success:hover {
+            background-color: #A4907C;
+        }
+
+        .btn-danger {
+            background-color: #777777;
+            color: #FFFFFF;
+        }
+
+        .btn-danger:hover {
+            background-color: #666666;
+        }
+
+        .btn-warning {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .btn-secondary {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+
+        .btn-secondary:hover {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .member-info-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .member-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #F1DEC9;
+        }
+
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            background-color: #F1DEC9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8D7B68;
+            font-size: 2rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .member-basic-info h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #3C2A21;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-id {
+            font-size: 1rem;
+            color: #777777;
+            margin-bottom: 1rem;
+        }
+
+        .member-badges {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-user {
+            background-color: #FFF8EA;
+            color: #8D7B68;
+            border: 1px solid #F1DEC9;
+        }
+
+        .badge-shelter {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .badge-active {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .badge-suspended {
+            background-color: #777777;
+            color: #FFFFFF;
+        }
+
+        .badge-warning {
+            background-color: #A4907C;
+            color: #FFFFFF;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .info-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #777777;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: #3C2A21;
+            font-weight: 500;
+        }
+
+        .info-value a {
+            color: #8D7B68;
+            text-decoration: none;
+        }
+
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        .stats-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background-color: #FFF8EA;
+            border-radius: 6px;
+            border-left: 4px solid #8D7B68;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #777777;
+        }
+
+        .stat-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #8D7B68;
+        }
+
+        .quick-actions {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .actions-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 1rem;
+        }
+
+        .actions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            text-align: left;
+            justify-content: flex-start;
+        }
+
+        .tabs-section {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(60, 42, 33, 0.1);
+        }
+
+        .tabs-nav {
+            display: flex;
+            border-bottom: 2px solid #F1DEC9;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #777777;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: #8D7B68;
+            border-bottom-color: #8D7B68;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .posts-list,
+        .comments-list,
+        .sanctions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .post-item,
+        .comment-item,
+        .sanction-item {
+            padding: 1.5rem;
+            background-color: #FFF8EA;
+            border-radius: 8px;
+            border: 1px solid #F1DEC9;
+        }
+
+        .post-header,
+        .comment-header,
+        .sanction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-title,
+        .comment-title,
+        .sanction-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3C2A21;
+            margin-bottom: 0.25rem;
+        }
+
+        .post-meta,
+        .comment-meta,
+        .sanction-meta {
+            font-size: 0.8125rem;
+            color: #777777;
+        }
+
+        .post-content,
+        .comment-content,
+        .sanction-reason {
+            font-size: 0.875rem;
+            color: #666666;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .post-stats,
+        .comment-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: #A4907C;
+        }
+
+        .sanction-period {
+            font-size: 0.875rem;
+            color: #777777;
+            background-color: #F1DEC9;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .item-btn {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #777777;
+        }
+
+        .empty-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+            color: #A4907C;
+        }
+
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .status-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .member-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .member-avatar {
+                margin: 0 auto;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-nav {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="main-container">
+        <!-- 페이지 헤더 -->
+        <header class="page-header">
+            <div class="header-left">
+                <a href="#" class="back-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15,18 9,12 15,6"></polyline>
+                    </svg>
+                </a>
+                <h1 class="page-title">회원 상세 정보</h1>
+            </div>
+            <div class="status-actions">
+                <button class="btn btn-warning">제재</button>
+                <button class="btn btn-success">메시지 발송</button>
+                <button class="btn btn-secondary">수정</button>
+            </div>
+        </header>
+
+        <div class="content-grid">
+            <!-- 회원 정보 섹션 -->
+            <section class="member-info-section">
+                <div class="member-header">
+                    <div class="member-avatar">김</div>
+                    <div class="member-basic-info">
+                        <h2>김사랑</h2>
+                        <div class="member-id">@love_dog_2024</div>
+                        <div class="member-badges">
+                            <span class="badge badge-user">일반회원</span>
+                            <span class="badge badge-active">활성</span>
+                        </div>
+                        <div class="info-value">
+                            <a href="mailto:love@example.com">love@example.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">회원번호</span>
+                        <span class="info-value">U-2024-001234</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">가입일</span>
+                        <span class="info-value">2024년 1월 15일</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">최근 로그인</span>
+                        <span class="info-value">2024년 3월 20일 14:30</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">로그인 횟수</span>
+                        <span class="info-value">234회</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">연락처</span>
+                        <span class="info-value">010-1234-5678</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">주소</span>
+                        <span class="info-value">서울특별시 강남구 대치동</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">생년월일</span>
+                        <span class="info-value">1988년 5월 12일</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">성별</span>
+                        <span class="info-value">여성</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">마케팅 수신 동의</span>
+                        <span class="info-value">동의</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">개인정보 처리 동의</span>
+                        <span class="info-value">동의</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">계정 생성 IP</span>
+                        <span class="info-value">192.168.1.100</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">최근 접속 IP</span>
+                        <span class="info-value">192.168.1.105</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 사이드바 -->
+            <aside>
+                <!-- 활동 통계 -->
+                <section class="stats-section">
+                    <h3 class="stats-title">활동 통계</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">작성한 게시글</span>
+                            <span class="stat-value">12개</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">작성한 댓글</span>
+                            <span class="stat-value">45개</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">받은 좋아요</span>
+                            <span class="stat-value">89개</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">팔로워</span>
+                            <span class="stat-value">23명</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">팔로잉</span>
+                            <span class="stat-value">56명</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">신고 횟수</span>
+                            <span class="stat-value">0회</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">제재 이력</span>
+                            <span class="stat-value">없음</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">입양 신청</span>
+                            <span class="stat-value">2회</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">봉사 참여</span>
+                            <span class="stat-value">5회</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">후원 금액</span>
+                            <span class="stat-value">150,000원</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 빠른 액션 -->
+                <section class="quick-actions">
+                    <h3 class="actions-title">빠른 액션</h3>
+                    <div class="actions-list">
+                        <button class="btn btn-secondary action-btn">프로필 수정</button>
+                        <button class="btn btn-warning action-btn">임시 제재</button>
+                        <button class="btn btn-danger action-btn">영구 제재</button>
+                        <button class="btn btn-success action-btn">제재 해제</button>
+                        <button class="btn btn-secondary action-btn">비밀번호 초기화</button>
+                        <button class="btn btn-secondary action-btn">이메일 인증 재발송</button>
+                    </div>
+                </section>
+            </aside>
+        </div>
+
+        <!-- 탭 섹션 -->
+        <section class="tabs-section">
+            <nav class="tabs-nav">
+                <button class="tab-btn active">게시글 (12)</button>
+                <button class="tab-btn">댓글 (45)</button>
+                <button class="tab-btn">제재 내역 (0)</button>
+                <button class="tab-btn">신고 내역 (0)</button>
+            </nav>
+
+            <!-- 게시글 탭 -->
+            <div class="tab-content active">
+                <div class="posts-list">
+                    <article class="post-item">
+                        <div class="post-header">
+                            <div>
+                                <h4 class="post-title">골든리트리버 입양 후기 - 행복한 6개월</h4>
+                                <div class="post-meta">자유게시판 • 2024.03.15 14:20</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-info item-btn">보기</button>
+                                <button class="btn btn-danger item-btn">삭제</button>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            해피독 보호소에서 골디를 입양한 지 6개월이 되었습니다. 처음에는 새로운 환경에 적응하느라 힘들어했지만 지금은 정말 행복한 나날들을 보내고 있어요. 골든리트리버는 정말 사람을 좋아하고 똑똑한 견종인 것 같습니다...
+                        </div>
+                        <div class="post-stats">
+                            <span>조회 245</span>
+                            <span>댓글 12</span>
+                            <span>좋아요 18</span>
+                        </div>
+                    </article>
+
+                    <article class="post-item">
+                        <div class="post-header">
+                            <div>
+                                <h4 class="post-title">강아지 산책 봉사 참여 후기</h4>
+                                <div class="post-meta">봉사 후기 • 2024.03.10 16:45</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-info item-btn">보기</button>
+                                <button class="btn btn-danger item-btn">삭제</button>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            지난 주말에 사랑의집 보호소에서 강아지 산책 봉사에 참여했습니다. 처음에는 조금 무서웠는데 강아지들이 너무 착하고 예뻐서 시간 가는 줄 몰랐어요...
+                        </div>
+                        <div class="post-stats">
+                            <span>조회 167</span>
+                            <span>댓글 8</span>
+                            <span>좋아요 24</span>
+                        </div>
+                    </article>
+
+                    <article class="post-item">
+                        <div class="post-header">
+                            <div>
+                                <h4 class="post-title">강아지 사료 추천 부탁드려요</h4>
+                                <div class="post-meta">질문/답변 • 2024.03.05 11:30</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-info item-btn">보기</button>
+                                <button class="btn btn-danger item-btn">삭제</button>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            3살 된 골든리트리버를 키우고 있는데 사료를 바꿔보려고 합니다. 혹시 추천해주실 만한 사료가 있을까요? 특히 털 윤기에 좋은 사료를 찾고 있어요...
+                        </div>
+                        <div class="post-stats">
+                            <span>조회 89</span>
+                            <span>댓글 15</span>
+                            <span>좋아요 6</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- 댓글 탭 -->
+            <div class="tab-content">
+                <div class="comments-list">
+                    <article class="comment-item">
+                        <div class="comment-header">
+                            <div>
+                                <h4 class="comment-title">게시글: "강아지 훈련 방법 문의"</h4>
+                                <div class="comment-meta">2024.03.18 09:15</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-info item-btn">보기</button>
+                                <button class="btn btn-danger item-btn">삭제</button>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            저도 같은 경험이 있어요! 긍정적 강화 훈련이 정말 효과적이었습니다. 특히 간식을 활용한 훈련은 골든리트리버에게 잘 맞는 것 같아요.
+                        </div>
+                        <div class="comment-stats">
+                            <span>좋아요 5</span>
+                            <span>답글 2</span>
+                        </div>
+                    </article>
+
+                    <article class="comment-item">
+                        <div class="comment-header">
+                            <div>
+                                <h4 class="comment-title">게시글: "보호소 후원 방법"</h4>
+                                <div class="comment-meta">2024.03.16 14:22</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn btn-info item-btn">보기</button>
+                                <button class="btn btn-danger item-btn">삭제</button>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            정기후원도 좋지만 물품후원도 큰 도움이 됩니다. 사료나 장난감 등을 직접 전달하는 것도 의미있는 일이에요.
+                        </div>
+                        <div class="comment-stats">
+                            <span>좋아요 8</span>
+                            <span>답글 1</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- 제재 내역 탭 -->
+            <div class="tab-content">
+                <div class="empty-state">
+                    <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 8v8"/>
+                        <path d="M8 12h8"/>
+                    </svg>
+                    <div>제재 내역이 없습니다.</div>
+                </div>
+            </div>
+
+            <!-- 신고 내역 탭 -->
+            <div class="tab-content">
+                <div class="empty-state">
+                    <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 8v8"/>
+                        <path d="M8 12h8"/>
+                    </svg>
+                    <div>신고 내역이 없습니다.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
