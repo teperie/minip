@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포포 - 보호 동물 상세 정보 | 미니펫</title>
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="/styles/animal-detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb container" aria-label="breadcrumb">
+        <ol>
+            <li><a href="/">홈</a></li>
+            <li><a href="/animal-list.html">보호 동물 목록</a></li>
+            <li aria-current="page">포포</li>
+        </ol>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="animal-detail container">
+        <div class="detail-container">
+            <!-- Image Gallery -->
+            <div class="gallery">
+                <div class="main-image">
+                    <img src="https://source.unsplash.com/random/600x600/?dog,pet" alt="포포의 사진" id="mainImage">
+                    <button class="btn-zoom" aria-label="이미지 확대">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+                <div class="thumbnail-container">
+                    <button class="thumbnail active" aria-label="포포 사진 1 보기">
+                        <img src="https://source.unsplash.com/random/600x600/?dog,pet" alt="포포 사진 1">
+                    </button>
+                    <button class="thumbnail" aria-label="포포 사진 2 보기">
+                        <img src="https://source.unsplash.com/random/600x600/?dog,playing" alt="포포 사진 2">
+                    </button>
+                    <button class="thumbnail" aria-label="포포 사진 3 보기">
+                        <img src="https://source.unsplash.com/random/600x600/?dog,grass" alt="포포 사진 3">
+                    </button>
+                    <button class="thumbnail" aria-label="포포 사진 4 보기">
+                        <img src="https://source.unsplash.com/random/600x600/?dog,portrait" alt="포포 사진 4">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Animal Info -->
+            <div class="animal-info">
+                <div class="animal-header">
+                    <div>
+                        <h1>포포</h1>
+                        <span class="badge badge-success">입양 대기</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="shareBtn" aria-label="공유하기">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                        <button class="btn-like" id="likeBtn" aria-label="관심 동물로 등록">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Basic Info Card -->
+                <div class="info-card">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">품종</span>
+                            <span class="value">믹스견</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">나이</span>
+                            <span class="value">2세 (추정)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">성별</span>
+                            <span class="value">수컷</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">체중</span>
+                            <span class="value">5.2kg</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">중성화</span>
+                            <span class="value">완료</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">예방접종</span>
+                            <span class="value">완료</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="description">
+                    <h2>포포를 소개합니다</h2>
+                    <p>
+                        포포는 활발하고 사랑스러운 성격을 가진 강아지에요. 사람을 좋아하고 장난치는 것을 무척 좋아해요. 
+                        산책을 좋아하고 다른 강아지들과도 잘 어울려요. 집에서 혼자 있는 시간이 길면 불안해할 수 있으니 
+                        자주 함께해줄 수 있는 분들과 함께하면 좋을 것 같아요.
+                    </p>
+                </div>
+
+                <!-- Personality & Health -->
+                <div class="traits">
+                    <div class="trait">
+                        <span class="trait-label">성격</span>
+                        <div class="trait-tags">
+                            <span class="tag">활발함</span>
+                            <span class="tag">사교적</span>
+                            <span class="tag">쾌활함</span>
+                        </div>
+                    </div>
+                    <div class="trait">
+                        <span class="trait-label">건강상태</span>
+                        <div class="trait-tags">
+                            <span class="tag">양호</span>
+                            <span class="tag">기본 예방접종 완료</span>
+                            <span class="tag">중성화 완료</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shelter Info -->
+                <div class="shelter-card">
+                    <div class="shelter-header">
+                        <div class="shelter-avatar">
+                            <img src="https://via.placeholder.com/50" alt="서울동물보호센터 로고">
+                        </div>
+                        <div class="shelter-info">
+                            <h3>서울동물보호센터</h3>
+                            <div class="shelter-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> 서울시 강남구</span>
+                                <span><i class="fas fa-phone"></i> 02-123-4567</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shelter-buttons">
+                        <button class="btn btn-secondary"><i class="fas fa-map-marker-alt"></i> 보호소 위치</button>
+                        <button class="btn btn-ghost"><i class="fas fa-envelope"></i> 문의하기</button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons-bottom">
+                    <button class="btn btn-primary btn-lg">
+                        <i class="fas fa-paw"></i> 입양 신청하기
+                    </button>
+                    <button class="btn btn-secondary btn-lg">
+                        <i class="fas fa-heart"></i> 관심 동물로 등록
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab active" data-tab="diary">보호 일지</button>
+                <button class="tab" data-tab="medical">의료 기록</button>
+                <button class="tab" data-tab="reviews">입양 후기</button>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="diary">
+                    <div class="diary-entry">
+                        <div class="diary-date">2023.10.15</div>
+                        <div class="diary-content">
+                            <h3>포포의 하루</h3>
+                            <p>오늘은 포포가 처음으로 산책을 다녀왔어요! 처음엔 조금 긴장했지만 금새 적응하더라구요. 
+                            다른 강아지들도 좋아하는지 궁금해하며 구경도 하고 왔어요. 앞으로 자주 산책 나가고 싶어하네요.</p>
+                            <div class="diary-images">
+                                <img src="https://source.unsplash.com/random/300x200/?dog,park" alt="포포 산책 사진">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="diary-entry">
+                        <div class="diary-date">2023.10.10</div>
+                        <div class="diary-content">
+                            <h3>포포와의 첫 만남</h3>
+                            <p>오늘 포포가 우리 보호소에 들어왔어요. 조금 긴장한 모습이지만 사람을 무척 좋아하는 아이예요. 
+                            밥도 잘 먹고 푹 쉬고 있어요. 곧 건강해질 거예요!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="medical">
+                    <div class="medical-record">
+                        <h3>의료 기록</h3>
+                        <ul class="medical-list">
+                            <li>
+                                <span class="date">2023.10.12</span>
+                                <span class="procedure">기본 예방접종 (DHPPL, 코로나, 켄넬코프)</span>
+                            </li>
+                            <li>
+                                <span class="date">2023.10.10</span>
+                                <span class="procedure">중성화 수술</span>
+                            </li>
+                            <li>
+                                <span class="date">2023.10.05</span>
+                                <span class="procedure">기본 검진 및 구충제 투여</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-pane" id="reviews">
+                    <div class="no-reviews">
+                        <i class="fas fa-comment-dots"></i>
+                        <p>아직 등록된 입양 후기가 없습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Image Modal -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <span class="close-modal" aria-label="이미지 닫기">&times;</span>
+            <img src="" alt="" id="modalImage">
+        </div>
+    </div>
+
+    <script src="/scripts/main.js"></script>
+    <script src="/scripts/animal-detail.js"></script>
+</body>
+</html>

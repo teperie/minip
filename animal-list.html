@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보호 동물 목록 - 미니펫</title>
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/common.css">
+    <link rel="stylesheet" href="/styles/animal-list.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> -->
+</head>
+<body>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li><a href="/">홈</a></li>
+                    <li>보호 동물 목록</li>
+                </ol>
+            </nav>
+            <h2>보호 동물 목록</h2>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="animal-list-container">
+        <div class="container">
+            <!-- Search Filters -->
+            <div class="search-filters">
+                <div class="filter-group">
+                    <label for="breed" class="sr-only">품종 선택</label>
+                    <select id="breed" class="filter-select" aria-label="품종 선택">
+                        <option value="">품종 선택</option>
+                        <option value="dog">강아지</option>
+                        <option value="cat">고양이</option>
+                        <option value="etc">기타 동물</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">성별</span>
+                    <div class="gender-toggle">
+                        <button type="button" class="toggle-btn" aria-pressed="false" data-gender="male">수컷</button>
+                        <button type="button" class="toggle-btn" aria-pressed="false" data-gender="female">암컷</button>
+                        <button type="button" class="toggle-btn active" aria-pressed="true" data-gender="all">전체</button>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label for="search" class="sr-only">이름 검색</label>
+                    <input type="text" id="search" class="search-input" placeholder="이름 검색" aria-label="이름 검색">
+                </div>
+            </div>
+
+            <!-- Button Filters -->
+            <div class="button-filters">
+                <button type="button" class="btn-filter active" data-filter="available">
+                    <i class="fas fa-paw"></i> 입양 가능
+                </button>
+                <button type="button" class="btn-filter" data-filter="recent">
+                    <i class="fas fa-clock"></i> 최근 구조
+                </button>
+            </div>
+
+            <!-- Animal Cards Grid -->
+            <div class="animal-grid" id="animalGrid" role="list">
+                <!-- Example Animal Card -->
+                <article class="animal-card" role="listitem" aria-label="뽀미 강아지 정보">
+                    <img src="https://via.placeholder.com/220x160" alt="뽀미 사진" class="animal-image">
+                    <div class="animal-info">
+                        <h3 class="animal-name">뽀미</h3>
+                        <div class="animal-details">
+                            <span>1살 2개월</span>
+                            <span>말티즈</span>
+                        </div>
+                        <span class="animal-status status-available">입양 가능</span>
+                    </div>
+                </article>
+
+                <!-- More animal cards will be populated by JavaScript -->
+                <div class="no-animals" aria-live="polite" hidden>
+                    동물이 없습니다
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/scripts/animal-list.js"></script>
+</body>
+</html>
+                    
