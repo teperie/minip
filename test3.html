@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동물 보호소 일상 콘텐츠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        body {
+            background-color: #F9F9F9;
+            color: #000000;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            background-color: #FFFFFF;
+            padding: 20px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #3C2A21;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #666666;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #8D7B68;
+        }
+        
+        .nav-menu a.active {
+            color: #8D7B68;
+            font-weight: 700;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            color: #3C2A21;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .feed-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .content-card {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .media-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .media-content {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #F1DEC9;
+        }
+        
+        .media-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #FFFFFF;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #777777;
+        }
+        
+        .author {
+            font-weight: 500;
+        }
+        
+        .post-date {
+            color: #A4907C;
+        }
+        
+        .post-text {
+            color: #000000;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .hashtag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .hashtag {
+            background-color: #F1DEC9;
+            color: #8D7B68;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .hashtag:hover {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #F1DEC9;
+            padding-top: 15px;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            color: #666666;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+        
+        .action-btn:hover {
+            color: #8D7B68;
+        }
+        
+        footer {
+            background-color: #3C2A21;
+            color: #FFFFFF;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .footer-links a {
+            color: #F1DEC9;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #A4907C;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">동물 보호소</div>
+            <nav class="nav-menu">
+                <a href="#">홈</a>
+                <a href="#" class="active">일상 콘텐츠</a>
+                <a href="#">입양하기</a>
+                <a href="#">후원하기</a>
+                <a href="#">봉사활동</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">보호소 일상 콘텐츠</h1>
+        
+        <div class="feed-container">
+            <div class="content-card">
+                <div class="media-container">
+                    <img src="#" alt="보호소에서 놀고 있는 강아지들" class="media-content">
+                    <div class="media-indicator">이미지</div>
+                </div>
+                <div class="card-content">
+                    <div class="meta-info">
+                        <span class="author">서울동물보호소</span>
+                        <span class="post-date">2023.11.05</span>
+                    </div>
+                    <p class="post-text">오늘은 날씨가 좋아서 강아지들과 마당에서 놀았어요. 새로 입소한 멍뭉이도 점점 적응하는 모습이 보기 좋습니다.</p>
+                    <div class="hashtag-list">
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#강아지 해시태그 필터 적용">#강아지</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#일상 해시태그 필터 적용">#일상</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#놀이시간 해시태그 필터 적용">#놀이시간</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" aria-label="좋아요">
+                            ♥ <span>24</span>
+                        </button>
+                        <button class="action-btn" aria-label="댓글">
+                            💬 <span>7</span>
+                        </button>
+                        <button class="action-btn" aria-label="공유">
+                            ↗ <span>공유</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="media-container">
+                    <div class="media-content" style="background-color: #A4907C;"></div>
+                    <div class="media-indicator">동영상</div>
+                </div>
+                <div class="card-content">
+                    <div class="meta-info">
+                        <span class="author">해피동물보호소</span>
+                        <span class="post-date">2023.11.04</span>
+                    </div>
+                    <p class="post-text">새로 들어온 고양이들의 적응기를 영상으로 담아봤습니다. 점점 건강해지는 모습이 정말 기쁘네요.</p>
+                    <div class="hashtag-list">
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#고양이 해시태그 필터 적용">#고양이</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#입소해요 해시태그 필터 적용">#입소해요</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#적응기 해시태그 필터 적용">#적응기</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" aria-label="좋아요">
+                            ♥ <span>42</span>
+                        </button>
+                        <button class="action-btn" aria-label="댓글">
+                            💬 <span>15</span>
+                        </button>
+                        <button class="action-btn" aria-label="공유">
+                            ↗ <span>공유</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="media-container">
+                    <img src="#" alt="입양되어 가는 강아지와 입양가족" class="media-content">
+                    <div class="media-indicator">이미지</div>
+                </div>
+                <div class="card-content">
+                    <div class="meta-info">
+                        <span class="author">사랑동물보호센터</span>
+                        <span class="post-date">2023.11.03</span>
+                    </div>
+                    <p class="post-text">오늘은 3마리의 아이들이 새 가족을 만나는 감동적인 날이었습니다. 모두 행복한 가정에서 잘 지내길 바랍니다.</p>
+                    <div class="hashtag-list">
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#입양해요 해시태그 필터 적용">#입양해요</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#감동적인순간 해시태그 필터 적용">#감동적인순간</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#새출발 해시태그 필터 적용">#새출발</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" aria-label="좋아요">
+                            ♥ <span>67</span>
+                        </button>
+                        <button class="action-btn" aria-label="댓글">
+                            💬 <span>23</span>
+                        </button>
+                        <button class="action-btn" aria-label="공유">
+                            ↗ <span>공유</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="media-container">
+                    <img src="#" alt="봉사자들이 함께하는 보호소 청소 활동" class="media-content">
+                    <div class="media-indicator">이미지</div>
+                </div>
+                <div class="card-content">
+                    <div class="meta-info">
+                        <span class="author">희망동물보호소</span>
+                        <span class="post-date">2023.11.02</span>
+                    </div>
+                    <p class="post-text">주말 봉사자 분들과 함께 보호소 대청소를 진행했습니다. 덕분에 아이들이 더 깨끗한 환경에서 지낼 수 있게 되었어요.</p>
+                    <div class="hashtag-list">
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#봉사활동 해시태그 필터 적용">#봉사활동</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#함께해요 해시태그 필터 적용">#함께해요</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#청소해요 해시태그 필터 적용">#청소해요</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" aria-label="좋아요">
+                            ♥ <span>38</span>
+                        </button>
+                        <button class="action-btn" aria-label="댓글">
+                            💬 <span>12</span>
+                        </button>
+                        <button class="action-btn" aria-label="공유">
+                            ↗ <span>공유</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="media-container">
+                    <div class="media-content" style="background-color: #8D7B68;"></div>
+                    <div class="media-indicator">동영상</div>
+                </div>
+                <div class="card-content">
+                    <div class="meta-info">
+                        <span class="author">푸르동물보호소</span>
+                        <span class="post-date">2023.11.01</span>
+                    </div>
+                    <p class="post-text">특별히 훈련이 필요한 아이들을 위한 교육 프로그램을 시작했습니다. 많은 관심 부탁드려요!</p>
+                    <div class="hashtag-list">
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#교육프로그램 해시태그 필터 적용">#교육프로그램</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#특별케어 해시태그 필터 적용">#특별케어</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#함께성장해요 해시태그 필터 적용">#함께성장해요</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" aria-label="좋아요">
+                            ♥ <span>29</span>
+                        </button>
+                        <button class="action-btn" aria-label="댓글">
+                            💬 <span>8</span>
+                        </button>
+                        <button class="action-btn" aria-label="공유">
+                            ↗ <span>공유</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <div class="media-container">
+                    <img src="#" alt="보호소에서 치료받고 있는 동물" class="media-content">
+                    <div class="media-indicator">이미지</div>
+                </div>
+                <div class="card-content">
+                    <div class="meta-info">
+                        <span class="author">따뜻한동물보호소</span>
+                        <span class="post-date">2023.10.31</span>
+                    </div>
+                    <p class="post-text">다친 채로 발견되어 구조된 아이가 조금씩 회복하고 있습니다. 많은 관심과 응원 부탁드려요.</p>
+                    <div class="hashtag-list">
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#치료중 해시태그 필터 적용">#치료중</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#회복해요 해시태그 필터 적용">#회복해요</span>
+                        <span class="hashtag" role="button" tabindex="0" aria-label="#응원해요 해시태그 필터 적용">#응원해요</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" aria-label="좋아요">
+                            ♥ <span>53</span>
+                        </button>
+                        <button class="action-btn" aria-label="댓글">
+                            💬 <span>19</span>
+                        </button>
+                        <button class="action-btn" aria-label="공유">
+                            ↗ <span>공유</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">동물 보호소</div>
+                <div>© 2023 Animal Shelter. All rights reserved.</div>
+            </div>
+            <div class="footer-links">
+                <a href="#">이용약관</a>
+                <a href="#">개인정보처리방침</a>
+                <a href="#">문의하기</a>
+                <a href="#">후원문의</a>
+            </div>
+        </div>
+        <div class="copyright">더 나은 동물 보호 환경을 위해 함께해주세요</div>
+    </footer>
+</body>
+</html>

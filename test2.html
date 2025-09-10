@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실종 동물 상세 정보</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #F9F9F9;
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #3C2A21;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #FFFFFF;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: #F1DEC9;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #FFFFFF;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+        }
+
+        .main-content {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .profile-section {
+            padding: 40px;
+            border-bottom: 1px solid #F1DEC9;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid #F1DEC9;
+        }
+
+        .profile-basic {
+            flex: 1;
+        }
+
+        .animal-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #3C2A21;
+            margin-bottom: 15px;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #777777;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #000000;
+            font-weight: 500;
+        }
+
+        .missing-info {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #F1DEC9;
+        }
+
+        .missing-date {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .missing-badge {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .missing-location {
+            color: #666666;
+            font-size: 16px;
+        }
+
+        .details-section {
+            padding: 40px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3C2A21;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #F1DEC9;
+        }
+
+        .details-content {
+            background-color: #FFF8EA;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .details-text {
+            color: #000000;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .contact-info {
+            background-color: #F1DEC9;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .contact-label {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 8px;
+        }
+
+        .contact-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #3C2A21;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .action-card {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .action-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #3C2A21;
+            margin-bottom: 15px;
+        }
+
+        .primary-btn {
+            width: 100%;
+            background-color: #8D7B68;
+            color: #FFFFFF;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .primary-btn:hover {
+            background-color: #A4907C;
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            width: 100%;
+            background-color: transparent;
+            color: #8D7B68;
+            border: 2px solid #8D7B68;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .secondary-btn:hover {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+
+        .emergency-notice {
+            background-color: #3C2A21;
+            color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .emergency-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .emergency-number {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .footer {
+            background-color: #3C2A21;
+            color: #F1DEC9;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .registration-number {
+            background-color: #FFF8EA;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #8D7B68;
+        }
+
+        .reg-label {
+            font-size: 12px;
+            color: #777777;
+            margin-bottom: 5px;
+        }
+
+        .reg-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #3C2A21;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" role="banner">
+        <div class="header-content">
+            <a href="#" class="logo" aria-label="홈으로 이동">실종동물찾기</a>
+            <nav class="nav-menu" role="navigation">
+                <a href="#" aria-label="실종 신고">실종 신고</a>
+                <a href="#" aria-label="발견 신고">발견 신고</a>
+                <a href="#" aria-label="보호소 정보">보호소</a>
+                <a href="#" aria-label="마이페이지">마이페이지</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" role="main">
+        <article class="main-content" role="article" aria-labelledby="animal-name">
+            <section class="profile-section" aria-label="동물 프로필 정보">
+                <div class="profile-header">
+                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                         alt="실종된 골든 리트리버 사진" 
+                         class="profile-image">
+                    
+                    <div class="profile-basic">
+                        <h1 id="animal-name" class="animal-name">골든이</h1>
+                        
+                        <div class="profile-info">
+                            <div class="info-item">
+                                <span class="info-label">성별</span>
+                                <span class="info-value">수컷 (중성화 완료)</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">나이</span>
+                                <span class="info-value">3세</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">품종</span>
+                                <span class="info-value">골든 리트리버</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">체중</span>
+                                <span class="info-value">28kg</span>
+                            </div>
+                        </div>
+
+                        <div class="registration-number">
+                            <div class="reg-label">동물등록번호</div>
+                            <div class="reg-value">410000-202301-00123</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="missing-info" aria-label="실종 정보">
+                    <div class="missing-date">
+                        <span class="missing-badge">실종일: 2024년 9월 5일</span>
+                    </div>
+                    <div class="missing-location">
+                        <strong>실종 장소:</strong> 서울시 강남구 테헤란로 427번길 일대 (강남역 부근)
+                    </div>
+                </div>
+            </section>
+
+            <section class="details-section" aria-label="상세 정보">
+                <h2 class="section-title">실종 당시 상황 및 특이사항</h2>
+                <div class="details-content">
+                    <p class="details-text">
+                        산책 중 갑작스런 소음(공사 소리)에 놀라 목줄을 끊고 도망감. 
+                        평소 매우 순하고 사람을 좋아하는 성격이나, 낯선 환경에서는 겁이 많아 숨어있을 가능성이 높음. 
+                        오른쪽 뒷다리에 작은 흉터가 있으며, 파란색 목걸이를 착용하고 있었음. 
+                        "골든아", "앉아", "이리와" 명령어에 잘 반응함.
+                    </p>
+                </div>
+
+                <h2 class="section-title">보호자 연락처</h2>
+                <div class="contact-info" role="region" aria-label="연락처 정보">
+                    <div class="contact-label">휴대폰</div>
+                    <div class="contact-value">010-1234-5678</div>
+                </div>
+
+                <div class="details-content">
+                    <p class="details-text">
+                        <strong>추가 정보:</strong> 
+                        발견 시 즉시 연락 부탁드립니다. 밤늦은 시간이라도 상관없습니다. 
+                        사례금을 준비했으며, 병원 치료가 필요한 경우 모든 비용을 부담하겠습니다.
+                    </p>
+                </div>
+            </section>
+        </article>
+
+        <aside class="sidebar" role="complementary" aria-label="액션 메뉴">
+            <div class="action-card">
+                <h3 class="action-title">발견했다면</h3>
+                <button class="primary-btn" 
+                        onclick="window.location.href='tel:010-1234-5678'"
+                        aria-label="보호자에게 전화하기">
+                    보호자에게 전화
+                </button>
+                <button class="secondary-btn" 
+                        aria-label="발견 신고하기">
+                    발견 신고하기
+                </button>
+            </div>
+
+            <div class="action-card">
+                <h3 class="action-title">정보 공유</h3>
+                <button class="secondary-btn" 
+                        aria-label="SNS 공유하기">
+                    SNS 공유하기
+                </button>
+                <button class="secondary-btn" 
+                        aria-label="주변에 알리기">
+                    주변에 알리기
+                </button>
+            </div>
+
+            <div class="emergency-notice" role="region" aria-label="응급상황 안내">
+                <div class="emergency-text">응급상황 시</div>
+                <div class="emergency-number">119 신고</div>
+            </div>
+        </aside>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; 2024 실종동물찾기. 모든 권리 보유.</p>
+        </div>
+    </footer>
+</body>
+</html>
