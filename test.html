@@ -1,67 +1,439 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>통합 피드 예시</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 0; background: #f9f9f9; }
-  .header { background: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
-  .feed { max-width: 800px; margin: 20px auto; }
-  .card { background: #fff; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 15px; }
-  .card-header { display: flex; justify-content: space-between; font-size: 0.9em; color: #777; margin-bottom: 10px; }
-  .card-title { font-weight: bold; margin-bottom: 10px; }
-  .card-content { margin-bottom: 10px; }
-  .card-footer { font-size: 0.8em; color: #555; display: flex; gap: 10px; }
-  .card img, .card video { width: 100%; border-radius: 8px; }
-  .tag { font-size: 0.75em; padding: 2px 6px; border-radius: 4px; background: #eee; color: #333; margin-left: 5px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실종 동물 상세 정보</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        body {
+            background-color: #F9F9F9;
+            color: #000000;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            background-color: #FFFFFF;
+            padding: 20px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #3C2A21;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #666666;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #8D7B68;
+        }
+        
+        .nav-menu a.active {
+            color: #8D7B68;
+            font-weight: 700;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 20px;
+            color: #777777;
+            font-size: 14px;
+        }
+        
+        .breadcrumb a {
+            color: #777777;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            color: #3C2A21;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .profile-card {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 40px;
+        }
+        
+        .profile-image {
+            width: 320px;
+            height: 320px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #F1DEC9;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .pet-name {
+            font-size: 24px;
+            color: #3C2A21;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            font-size: 14px;
+            color: #777777;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 16px;
+            color: #000000;
+            font-weight: 500;
+        }
+        
+        .detail-card {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            color: #3C2A21;
+            margin-bottom: 20px;
+            font-weight: 700;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #F1DEC9;
+        }
+        
+        .detail-content {
+            margin-bottom: 25px;
+        }
+        
+        .contact-info {
+            background-color: #FFF8EA;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .contact-label {
+            font-size: 16px;
+            color: #8D7B68;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .contact-value {
+            font-size: 18px;
+            color: #3C2A21;
+            font-weight: 700;
+        }
+        
+        .permission-note {
+            font-size: 14px;
+            color: #777777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: #8D7B68;
+            color: #FFFFFF;
+        }
+        
+        .btn-primary:hover {
+            background-color: #A4907C;
+        }
+        
+        .btn-secondary {
+            background-color: #F1DEC9;
+            color: #3C2A21;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e8d0b4;
+        }
+        
+        footer {
+            background-color: #3C2A21;
+            color: #FFFFFF;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .footer-links a {
+            color: #F1DEC9;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #A4907C;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #FFFFFF;
+            padding: 30px;
+            border-radius: 12px;
+            width: 400px;
+            max-width: 90%;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            color: #3C2A21;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .modal-text {
+            margin-bottom: 25px;
+            color: #666666;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <h1>동물 보호소 통합 피드</h1>
-  </div>
+    <header>
+        <div class="nav-container">
+            <div class="logo">반려동물 찾기</div>
+            <nav class="nav-menu">
+                <a href="#">홈</a>
+                <a href="#" class="active">실종동물</a>
+                <a href="#">제보하기</a>
+                <a href="#">커뮤니티</a>
+                <a href="#">마이페이지</a>
+            </nav>
+        </div>
+    </header>
 
-  <div class="feed">
-    <!-- 자유게시판 카드 -->
-    <div class="card">
-      <div class="card-header">
-        <span>회원123</span>
-        <span class="tag">자유게시판</span>
-      </div>
-      <div class="card-title">오늘 산책 중 만난 강아지</div>
-      <div class="card-content">짧게 텍스트만 있는 게시물입니다.</div>
-      <div class="card-footer">좋아요 5 · 댓글 2</div>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="#">홈</a> &gt; <a href="#">실종동물</a> &gt; 상세 정보
+        </div>
+        
+        <h1 class="page-title">실종 동물 상세 정보</h1>
+        
+        <div class="profile-card">
+            <img src="#" alt="실종된 포메라니안의 사진" class="profile-image">
+            <div class="profile-info">
+                <h2 class="pet-name">초코</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">성별</div>
+                        <div class="info-value">수컷</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">나이</div>
+                        <div class="info-value">3세</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">품종</div>
+                        <div class="info-value">포메라니안</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">실종일</div>
+                        <div class="info-value">2023년 10월 15일</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">실종 장소</div>
+                        <div class="info-value">서울시 강남구 역삼동</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">동물등록번호</div>
+                        <div class="info-value">123-456-789</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="detail-card">
+            <h3 class="card-title">상세 정보</h3>
+            
+            <div class="detail-content">
+                <div class="info-label">실종 당시 특이사항 / 상태</div>
+                <div class="info-value">갈색 목줄과 빨간색 하네스를 착용했으며, 오른쪽 뒷다리를 slightly 절뚝거리는 모습이 보였습니다. 사람을 잘 따르는 성격이지만 소음에 매우 민감하게 반응합니다.</div>
+            </div>
+            
+            <div class="detail-content">
+                <div class="info-label">추가 참고 정보</div>
+                <div class="info-value">미세먼지가 심한 날 실종되어 호흡기 문제가 있을 수 있습니다. 발견 시 즉시 연락 부탁드립니다.</div>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-label">보호자 연락처</div>
+                <div class="contact-value">010-1234-5678</div>
+                <div class="permission-note">* 이 정보는 보호소/관리자 권한으로만 표시됩니다</div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="openModal()">목격 제보하기</button>
+            <button class="btn btn-secondary">목록으로 돌아가기</button>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">반려동물 찾기</div>
+                <div>© 2023 PetFinder. All rights reserved.</div>
+            </div>
+            <div class="footer-links">
+                <a href="#">이용약관</a>
+                <a href="#">개인정보처리방침</a>
+                <a href="#">문의하기</a>
+                <a href="#">도움말</a>
+            </div>
+        </div>
+        <div class="copyright">이 페이지의 정보는 실종 반려동물의 빠른 찾기를 위해 제공됩니다.</div>
+    </footer>
+    
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <h3 class="modal-title">목격 제보하기</h3>
+            <p class="modal-text">이 동물을 목격하셨나요? 보호소나 관리자에게 제보해주세요.</p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary btn-small" onclick="closeModal()">취소</button>
+                <button class="btn btn-primary btn-small">제보하기</button>
+            </div>
+        </div>
     </div>
 
-    <!-- 블로그 카드 -->
-    <div class="card">
-      <div class="card-header">
-        <span>블로그 작성자</span>
-        <span class="tag">블로그</span>
-      </div>
-      <div class="card-title">보호소 일주일 기록</div>
-      <div class="card-content">
-        <img src="https://via.placeholder.com/750x300" alt="블로그 이미지">
-        <p>보호소에서 있었던 다양한 일상을 기록한 긴 글입니다. 텍스트와 이미지를 함께 포함합니다.</p>
-      </div>
-      <div class="card-footer">좋아요 15 · 댓글 4</div>
-    </div>
-
-    <!-- 보호소 일상 카드 -->
-    <div class="card">
-      <div class="card-header">
-        <span>강아지 보호소</span>
-        <span class="tag">보호소 일상</span>
-      </div>
-      <div class="card-title">귀여운 강아지 영상</div>
-      <div class="card-content">
-        <video controls>
-          <source src="sample-video.mp4" type="video/mp4">
-          브라우저가 비디오를 지원하지 않습니다.
-        </video>
-      </div>
-      <div class="card-footer">좋아요 25 · 댓글 10</div>
-    </div>
-  </div>
+    <script>
+        function openModal() {
+            document.getElementById('reportModal').style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('reportModal').style.display = 'none';
+        }
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
