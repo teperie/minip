@@ -1,0 +1,83 @@
+<article id="rescued-animal-detail" aria-labelledby="animal-name">
+    <header>
+      <h1 id="animal-name">[동물 이름 또는 번호]</h1>
+      <p id="case-id">사건번호: <span>[CASE-12345]</span></p>
+    </header>
+  
+    <!-- 프로필 영역 -->
+    <section id="profile" aria-labelledby="profile-heading">
+      <h2 id="profile-heading">프로필</h2>
+  
+      <!-- 프로필 사진: alt 필수 -->
+      <figure id="profile-photo">
+        <img src="[이미지_URL]" alt="발견된 동물의 사진" id="animal-photo" />
+        <figcaption id="photo-caption">사진 설명 또는 촬영일자</figcaption>
+      </figure>
+  
+      <!-- 주요 속성들: 레이블 + 값 -->
+      <dl id="profile-attributes">
+        <div>
+          <dt>성별</dt>
+          <dd id="gender">[수컷/암컷/미상]</dd>
+        </div>
+        <div>
+          <dt>나이</dt>
+          <dd id="age">[예: 약 2년]</dd>
+        </div>
+        <div>
+          <dt>품종</dt>
+          <dd id="breed">[예: 믹스 / 특정 품종]</dd>
+        </div>
+        <div>
+          <dt>발견일</dt>
+          <dd id="found-date"><time datetime="[YYYY-MM-DD]">[YYYY-MM-DD]</time></dd>
+        </div>
+        <div>
+          <dt>발견 장소</dt>
+          <dd id="found-place">[도로명/지역/좌표 등]</dd>
+        </div>
+        <div>
+          <dt>동물등록번호</dt>
+          <dd id="reg-number">[등록번호가 있을 경우 표기 / 미등록]</dd>
+        </div>
+      </dl>
+    </section>
+  
+    <!-- 상세 정보 영역 -->
+    <section id="detail-info" aria-labelledby="detail-heading">
+      <h2 id="detail-heading">상세 정보</h2>
+  
+      <h3>발견 당시 상태 / 특이사항</h3>
+      <p id="condition">[건강 상태, 상처, 행동 특성, 식욕 등 자유 서술]</p>
+  
+      <h3>구조자 / 보호소 연락처</h3>
+      <!-- 권한에 따라 표시. 비공개일 경우 문구로 대체 -->
+      <address id="rescuer-contact">
+        <p id="rescuer-name">구조자/보호소: [이름 또는 보호소명]</p>
+        <p id="rescuer-phone">연락처: <a href="tel:[전화번호]">[전화번호]</a></p>
+        <p id="rescuer-email">이메일: <a href="mailto:[이메일]">[이메일]</a></p>
+        <p id="contact-visibility-note">※ 연락처 공개 여부는 권한에 따라 달라집니다.</p>
+      </address>
+    </section>
+  
+    <!-- 메타 / 이력 -->
+    <section id="meta" aria-labelledby="meta-heading">
+      <h2 id="meta-heading">기록</h2>
+      <ul id="history">
+        <li>등록일: <time datetime="[YYYY-MM-DD]">[YYYY-MM-DD]</time></li>
+        <li>상태 변경: <span id="status">[예: 치료중 / 임시보호 / 입양대기]</span></li>
+        <li>메모: <span id="notes">[관리자 메모]</span></li>
+      </ul>
+    </section>
+  
+    <!-- 행동 유도(선택) -->
+    <nav id="actions" aria-label="관련 동작">
+      <ul>
+        <li><a href="[목록으로_이동_URL]" id="back-to-list">목록으로</a></li>
+        <li><a href="[신고_또는_문의_URL]" id="report-contact">문의 / 제보</a></li>
+        <li><a href="[다음_사례_URL]" id="next-case">다음</a></li>
+        <li><a href="[이전_사례_URL]" id="prev-case">이전</a></li>
+      </ul>
+    </nav>
+  </article>
+  
